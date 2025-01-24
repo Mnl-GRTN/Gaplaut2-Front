@@ -1,0 +1,20 @@
+<div *ngIf="center">
+
+    <div>
+
+        <div>
+            <h2>{{center.name}}</h2>
+            <div>
+                <span>Address: {{center.address}}</span>
+                <span>State: {{center.postalCode}} {{center.city}}</span>
+            </div>
+        </div>
+
+        <button (click)="clearName()">Clear Name</button>
+        Nom du centre: <input type="text" [(ngModel)]="center.name" />
+
+        <button (click)="delete()">Delete</button>
+
+    </div>
+
+</div>
