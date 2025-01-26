@@ -1,0 +1,98 @@
+<!-- home.component.html -->
+<div class="search-container">
+  <!-- Formulaire de prise de rendez-vous affiché si un centre est sélectionné -->
+  <div *ngIf="selectedCentre; else searchSection" class="appointment-section">
+    <button (click)="selectedCentre = undefined" class="back-button">← Retour</button>
+    <h2>Prendre un rendez-vous avec {{ selectedCentre.centreName }}</h2>
+    <form (ngSubmit)="submitAppointment()" class="appointment-form">
+      
+      <!-- Champ mail -->
+      <label for="mail">Email :</label>
+      <input
+        type="email"
+        [(ngModel)]="vaccination.mail"
+        id="mail"
+        name="mail"
+        class="appointment-input"
+        required
+      />
+      
+      <!-- Champ numéro de téléphone -->
+      <label for="phoneNumber">Numéro de téléphone :</label>
+      <input
+        type="tel"
+        [(ngModel)]="vaccination.phoneNumber"
+        id="phoneNumber"
+        name="phoneNumber"
+        class="appointment-input"
+        required
+      />
+      
+      <!-- Champ nom de famille -->
+      <label for="last_name">Nom de famille :</label>
+      <input
+        type="text"
+        [(ngModel)]="vaccination.last_name"
+        id="last_name"
+        name="last_name"
+        class="appointment-input"
+        required
+      />
+      
+      <!-- Champ prénom -->
+      <label for="first_name">Prénom :</label>
+      <input
+        type="text"
+        [(ngModel)]="vaccination.first_name"
+        id="first_name"
+        name="first_name"
+        class="appointment-input"
+        required
+      />
+      
+      <!-- Champ date de rendez-vous -->
+      <label for="appointedDate">Choisissez une date :</label>
+      <input
+        type="date"
+        [(ngModel)]="vaccination.date"
+        id="appointmentDate"
+        name="appointedDate"
+        class="appointment-input"
+        required
+      />
+
+      <!-- Bouton de soumission -->
+      <button type="submit" class="submit-button" [disabled]="!vaccination.date || !vaccination.mail || !vaccination.phoneNumber || !vaccination.first_name || !vaccination.last_name">
+        Prendre rendez-vous
+      </button>
+    </form>
+  </div>
+
+  <!-- Section de recherche de ville qui s'affiche lorsque aucun centre n'est sélectionné -->
+  <ng-template #searchSection>
+    <h1>Trouver votre centre de vaccination</h1>
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="filterCentres()"
+        placeholder="Entrez une ville"
+        class="search-input"
+      />
+    </div>
+
+    <!-- Affichage des résultats filtrés -->
+    <div *ngIf="filteredCentres.length" class="centres-list">
+      <ul>
+        <li *ngFor="let centre of filteredCentres" class="centre-item">
+          <span>{{ centre.centreName }} - {{ centre.city }}</span>
+          <button (click)="chooseCentre(centre)" class="choose-button">Choisir</button>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="!filteredCentres.length" class="no-centres">
+      <p>Aucun centre trouvé pour cette ville.</p>
+    </div>
+  </ng-template>
+</div>
