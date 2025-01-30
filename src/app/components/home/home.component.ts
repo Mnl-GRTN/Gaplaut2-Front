@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { MatButton } from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+
 import { CenterService } from '../../services/center.service';  // Import du service
 import { VaccinationService } from '../../services/vaccination.service';  // Import du service
 
@@ -11,7 +17,8 @@ import { Vaccination } from '../../services/vaccination';  // Import de l'interf
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ FormsModule, NgIf, NgFor ],
+  providers: [provideNativeDateAdapter()],
+  imports: [ FormsModule, NgIf, NgFor, MatButton, MatInputModule, MatFormFieldModule, MatDatepickerModule ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -63,9 +70,21 @@ export class HomeComponent implements OnInit {
     this.vaccination.centre.id = center.id;
   }
 
-  submitAppointment(): void {
-    console.log(this.vaccination);
+  onDateSelection(event: MatDatepickerInputEvent<Date>) {
+    // Add one day to the selected date to match the date format
+    var year = event.value?.getFullYear();
+    var month = event.value?.getMonth();
+    var day = event.value?.getDate();
+    day = day! + 1;
+    this.vaccination.date = year + '-' + month + '-' + day;
+  }
 
+  submitAppointment(): void {
+
+
+    this.vaccination.date = new Date(this.vaccination.date).toISOString().split('T')[0];
+
+    console.log(this.vaccination);
     this.vaccinationService.postVaccination(this.vaccination).subscribe((data) => {
       console.log(data);
     });
