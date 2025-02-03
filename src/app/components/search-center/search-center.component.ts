@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
@@ -15,14 +16,14 @@ import { Center } from '../../services/center';  // Import de l'interface Center
 import { Vaccination } from '../../services/vaccination';  // Import de l'interface Vaccination
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-search-center',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [ FormsModule, NgIf, NgFor, MatButton, MatInputModule, MatFormFieldModule, MatDatepickerModule ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  imports: [ FormsModule, NgIf, NgFor, MatButton, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatAutocompleteModule ],
+  templateUrl: './search-center.component.html',
+  styleUrls: ['./search-center.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class SearchCenterComponent implements OnInit {
 
   centres: Center[] = [];  // Liste complète des centres
   filteredCentres: Center[] = [];  // Résultats filtrés

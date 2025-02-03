@@ -4,7 +4,6 @@ export interface Vaccination {
     phoneNumber: string;
     last_name: string;
     first_name: string;
-    //LocalDateTime
     date: string;
     isVaccined: boolean;
   }

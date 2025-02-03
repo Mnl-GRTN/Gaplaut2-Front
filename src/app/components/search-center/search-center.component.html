@@ -78,18 +78,24 @@
   <!-- Section de recherche de ville qui s'affiche lorsque aucun centre n'est sélectionné -->
   <ng-template #searchSection>
     <h1>Trouver votre centre de vaccination</h1>
-      <mat-form-field class="input-full-width">
-        <mat-label>Entrez une ville</mat-label>
-        <input
-          matInput
-          type="text"
-          [(ngModel)]="searchTerm"
-          (input)="filterCentres()"
-          placeholder="Ex: Nancy"
-        />
-      </mat-form-field>
+    <mat-form-field class="input-full-width">
+      <mat-label>Entrez une ville</mat-label>
+      <input
+        type="text"
+        matInput
+        [(ngModel)]="searchTerm"
+        [matAutocomplete]="auto"
+        (input)="filterCentres()"
+        placeholder="Ex: Nancy"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let centre of filteredCentres" (click)="chooseCentre(centre)">
+          {{ centre.centreName }} - {{ centre.city }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-    <!-- Affichage des résultats filtrés -->
+    <!-- Affichage des résultats filtrés
     <div *ngIf="filteredCentres.length" class="centres-list">
       <ul>
         <li *ngFor="let centre of filteredCentres" class="centre-item">
@@ -103,4 +109,4 @@
       <p>Aucun centre trouvé pour cette ville.</p>
     </div>
   </ng-template>
-</div>
+</div> -->
