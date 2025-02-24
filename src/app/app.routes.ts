@@ -1,16 +1,21 @@
-import { Routes } from '@angular/router';
-import { FirstComponent } from './first/first.component';
-import { SecondComponent } from './second/second.component';
-import { VaccinationCenterComponent } from './vaccination-center/vaccination-center.component';
-import { VaccinationCenterListComponent } from './vaccination-center-list/vaccination-center-list.component';
-import { SearchCenterComponent } from './components/search-center/search-center.component';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './public/pages/home/home.component';
+import { AuthComponent } from './public/pages/auth/auth.component';
+import { NgModule } from '@angular/core';
+import { AuthGuard } from './core/guards/auth.guard';
+import { TestComponent } from './private/pages/test/test.component';
 
 export const routes: Routes = [
 
-    { path: "first" , component: FirstComponent },
-    { path: "second/:id" , component: SecondComponent },
-    { path: "centers", component: VaccinationCenterListComponent },
-    { path : "centers/detail/:id", component: VaccinationCenterComponent},
-    { path: "search" , component: SearchCenterComponent },
-    { path: "" , redirectTo: "/search" , pathMatch: "full" }
+    { path: "home" , component: HomeComponent },
+    { path: "login" , component: AuthComponent },
+    { path: "test", component: TestComponent, canActivate: [AuthGuard] },
+    { path: "**" , redirectTo: "/home" }, // Redirect to home if the route doesn't exist
+    { path: "" , redirectTo: "/home" , pathMatch: "full" }
 ];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {}
