@@ -8,7 +8,7 @@ import { Center } from './center';  // Importation de la classe Center
 })
 export class CenterService {
 
-  private apiUrl = '/api/centres';  // URL de l'API backend
+  private apiUrl = 'public/api/centres';  // URL de l'API backend
 
   constructor(private http: HttpClient) { }
 
