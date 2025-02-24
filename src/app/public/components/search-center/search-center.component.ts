@@ -9,11 +9,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
-import { CenterService } from '../../services/center.service';  // Import du service
-import { VaccinationService } from '../../services/vaccination.service';  // Import du service
+import { CenterService } from '../../../core/services/center.service';  // Import du service
+import { VaccinationService } from '../../../core/services/vaccination.service';  // Import du service
 
-import { Center } from '../../services/center';  // Import de l'interface Center
-import { Vaccination } from '../../services/vaccination';  // Import de l'interface Vaccination
+import { Center } from '../../../core/services/center';  // Import de l'interface Center
+import { Vaccination } from '../../../core/services/vaccination';  // Import de l'interface Vaccination
 
 @Component({
   selector: 'app-search-center',

@@ -9,7 +9,7 @@ import { Vaccination } from './vaccination';  // Importation de la classe Center
 
 export class VaccinationService {
 
-    private apiUrl = '/api/vaccinations';  // URL de l'API backend
+    private apiUrl = 'public/api/vaccinations';  // URL de l'API backend
 
     constructor(private http: HttpClient) { }
 
