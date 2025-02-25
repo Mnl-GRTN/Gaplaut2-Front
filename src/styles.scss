@@ -3,7 +3,7 @@
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -20,6 +20,15 @@ $vaccination-app-theme: mat.define-theme((
     scale: 0,
   )
 ));
+
+$custom-typography: mat.define-theme((
+  typography: (
+    brand-family: 'Poppins',
+    plain-family: 'Poppins',
+  )
+));
+
+@include mat.typography-hierarchy($custom-typography);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -39,20 +48,24 @@ h1{
     color: #369
 }
 
-h2,h3{
-    color: #444;
-    font-weight: lighter;
+h2,h3, .mat-headline-medium{
+    color: #2685e5;
+    font-weight: 600 !important;
 }
+
+// body {
+//   --mdc-filled-text-field-container-color: transparent;
+// }
 
 body{
     margin: 2em;
 }
 
 *{
-    font-family : Arial, Helvetica, sans-serif
+    font-family : Poppins, Arial, Helvetica, sans-serif
 }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Poppins, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Poppins, "Helvetica Neue", sans-serif; }
