@@ -1,0 +1,41 @@
+.navbar {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    background: transparent;
+    z-index: 1000;
+    box-sizing: border-box; // Correction du débordement
+  
+    .logo {
+      font-weight: bold;
+      color: #1976d2;
+      white-space: nowrap;
+    }
+  
+    .login-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      position: absolute;
+      right: 30px; // Fixe le bouton sans dépasser
+      max-width: calc(100% - 60px); // Évite le débordement
+  
+      mat-icon {
+        font-size: 24px;
+        color: #1976d2;
+      }
+    }
+  }
+  
