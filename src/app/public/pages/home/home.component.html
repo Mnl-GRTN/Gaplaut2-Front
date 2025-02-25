@@ -1,2 +1,30 @@
-<p>home works!</p>
-<app-search-center></app-search-center>
+<div class="homepage">
+    <div class="homepage__background"></div>
+    <div class="homepage__overlay">
+        <h3>Votre santé et celle de vos proches est entre vos mains</h3>
+        <div class="homepage__search">
+            <p>Entrez votre ville pour découvrir votre centre de vaccination le plus proche.</p>
+            <app-search-center></app-search-center>
+        </div>
+    </div> 
+</div>
+
+<div class="info-cards">
+    <app-info-card
+      title="Vaccinations"
+      description="Trouvez les informations sur vos vaccins."
+      imageUrl="assets/images/vaccine-icon.png">
+    </app-info-card>
+  
+    <app-info-card
+      title="Rendez-vous"
+      description="Prenez rendez-vous en ligne facilement."
+      imageUrl="assets/images/appointment-icon.png">
+    </app-info-card>
+  
+    <app-info-card
+      title="Dossier médical"
+      description="Accédez à vos données médicales sécurisées."
+      imageUrl="assets/images/medical-file-icon.png">
+    </app-info-card>
+</div>

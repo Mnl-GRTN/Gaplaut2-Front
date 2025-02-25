@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 import { CenterService } from '../../../core/services/center.service';  // Import du service
 import { VaccinationService } from '../../../core/services/vaccination.service';  // Import du service
@@ -19,13 +20,14 @@ import { Vaccination } from '../../../core/services/vaccination';  // Import de 
   selector: 'app-search-center',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [ FormsModule, NgIf, NgFor, MatButton, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatAutocompleteModule ],
+  imports: [ FormsModule, NgIf, NgFor, MatButton, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatAutocompleteModule, MatIconModule ],
   templateUrl: './search-center.component.html',
   styleUrls: ['./search-center.component.scss']
 })
 export class SearchCenterComponent implements OnInit {
 
   centres: Center[] = [];  // Liste complète des centres
+  fullFilteredCentres: Center[] = [];  // Liste complète des centres filtrés
   filteredCentres: Center[] = [];  // Résultats filtrés
   searchTerm: string = '';  // Terme de recherche
   selectedCentre?: Center;  // Centre sélectionné
@@ -50,18 +52,19 @@ export class SearchCenterComponent implements OnInit {
   loadCentres(): void {
     this.vaccinationCenterService.getVaccinationCenters().subscribe((data) => {
       this.centres = data;
-      this.filteredCentres = data;  // Initialement, tous les centres sont affichés
+      this.fullFilteredCentres = data;  // Initialement, aucun centre filtré
+      // this.filteredCentres = data;
     });
   }
 
   filterCentres(): void {
     const term = this.searchTerm.toLowerCase();
     if (term.trim()) {
-      this.filteredCentres = this.centres.filter((centre) => 
+      this.filteredCentres = this.fullFilteredCentres.filter((centre) => 
         centre.city.toLowerCase().includes(term)
       );
     } else {
-      this.filteredCentres = this.centres;  // Si pas de recherche, afficher tous les centres
+      this.filteredCentres = this.fullFilteredCentres;  // Si pas de recherche, afficher tous les centres
     }
   }
 

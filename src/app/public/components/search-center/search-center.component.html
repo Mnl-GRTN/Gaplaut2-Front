@@ -3,7 +3,7 @@
   <!-- Formulaire de prise de rendez-vous affiché si un centre est sélectionné -->
   <div *ngIf="selectedCentre; else searchSection" class="appointment-section">
     <button mat-flat-button (click)="selectedCentre = undefined" class="back-button">Retour</button>
-    <h2>Prendre un rendez-vous avec {{ selectedCentre.centreName }}</h2>
+    <p>Prendre un rendez-vous avec {{ selectedCentre.centreName }}</p>
     <form (ngSubmit)="submitAppointment()" class="appointment-form">
       
       <!-- Champ mail -->
@@ -77,9 +77,8 @@
 
   <!-- Section de recherche de ville qui s'affiche lorsque aucun centre n'est sélectionné -->
   <ng-template #searchSection>
-    <h1>Trouver votre centre de vaccination</h1>
     <mat-form-field class="input-full-width">
-      <mat-label>Entrez une ville</mat-label>
+      <mat-label>Saisissez votre ville</mat-label>
       <input
         type="text"
         matInput
@@ -88,6 +87,7 @@
         (input)="filterCentres()"
         placeholder="Ex: Nancy"
       />
+      <mat-icon matPrefix>location_on</mat-icon>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let centre of filteredCentres" (click)="chooseCentre(centre)">
           {{ centre.centreName }} - {{ centre.city }}
