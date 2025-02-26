@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -6,7 +6,7 @@ import { MatButton } from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -26,71 +26,38 @@ import { Vaccination } from '../../../core/services/vaccination';  // Import de 
 })
 export class SearchCenterComponent implements OnInit {
 
-  centres: Center[] = [];  // Liste complète des centres
-  fullFilteredCentres: Center[] = [];  // Liste complète des centres filtrés
-  filteredCentres: Center[] = [];  // Résultats filtrés
-  searchTerm: string = '';  // Terme de recherche
-  selectedCentre?: Center;  // Centre sélectionné
+  centres: Center[] = [];
+  filteredCentres: Center[] = [];
+  searchTerm: string = '';
 
-  // Champs pour le formulaire
-  vaccination: Vaccination = {
-    centre: { id: 0 },
-    mail: '',
-    phoneNumber: '',
-    last_name: '',
-    first_name: '',
-    date: new Date().toISOString(),
-    isVaccined: false
-  };
+  @Output() centreSelected = new EventEmitter<Center>();
 
-  constructor(private vaccinationCenterService: CenterService, private vaccinationService: VaccinationService) { }
+  constructor(private vaccinationCenterService: CenterService) {}
 
   ngOnInit(): void {
-    this.loadCentres();  // Charger les centres dès l'initialisation
+    this.loadCentres();
   }
 
   loadCentres(): void {
     this.vaccinationCenterService.getVaccinationCenters().subscribe((data) => {
       this.centres = data;
-      this.fullFilteredCentres = data;  // Initialement, aucun centre filtré
-      // this.filteredCentres = data;
+      this.filteredCentres = data;
     });
   }
 
   filterCentres(): void {
     const term = this.searchTerm.toLowerCase();
     if (term.trim()) {
-      this.filteredCentres = this.fullFilteredCentres.filter((centre) => 
+      this.filteredCentres = this.centres.filter((centre) =>
         centre.city.toLowerCase().includes(term)
       );
     } else {
-      this.filteredCentres = this.fullFilteredCentres;  // Si pas de recherche, afficher tous les centres
+      this.filteredCentres = this.centres;
     }
   }
 
-  chooseCentre(center: Center): void {
-    this.selectedCentre = center;
-    // Assignation de l'id du centre dans le formulaire
-    this.vaccination.centre.id = center.id;
-  }
-
-  onDateSelection(event: MatDatepickerInputEvent<Date>) {
-    // Add one day to the selected date to match the date format
-    var year = event.value?.getFullYear();
-    var month = event.value?.getMonth();
-    var day = event.value?.getDate();
-    day = day! + 1;
-    this.vaccination.date = year + '-' + month + '-' + day;
-  }
-
-  submitAppointment(): void {
-
-
-    this.vaccination.date = new Date(this.vaccination.date).toISOString().split('T')[0];
-
-    console.log(this.vaccination);
-    this.vaccinationService.postVaccination(this.vaccination).subscribe((data) => {
-      console.log(data);
-    });
+  chooseCentre(centre: Center): void {
+    console.log("Centre émis : ", centre);
+    this.centreSelected.emit(centre);
   }
 }
