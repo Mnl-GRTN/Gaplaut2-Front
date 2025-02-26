@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { VaccinationService } from '../../../core/services/vaccination.service';
 import { Center } from '../../../core/services/center';
 import { Vaccination } from '../../../core/services/vaccination';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { NgIf } from '@angular/common';
 
 import { MatButton } from '@angular/material/button';
@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class AppointmentFormComponent {
   
+  @ViewChild('appointmentForm') appointmentForm!: NgForm;
   @Input() selectedCentre?: Center;
   @Output() appointmentSubmitted = new EventEmitter<void>();
   @Output() backToSearch = new EventEmitter<void>();
@@ -56,6 +57,7 @@ export class AppointmentFormComponent {
   }
 
   clearSelection(): void {
+    this.appointmentForm.resetForm();
     this.backToSearch.emit();
   }
   
