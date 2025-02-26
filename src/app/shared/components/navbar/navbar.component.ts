@@ -17,4 +17,8 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
 
+  redirectHome(): void {
+    this.router.navigate(['/home']);
+  }
+
 }
