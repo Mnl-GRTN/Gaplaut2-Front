@@ -20,7 +20,7 @@ import { Vaccination } from '../../../core/services/vaccination';  // Import de 
   selector: 'app-search-center',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [ FormsModule, NgIf, NgFor, MatButton, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatAutocompleteModule, MatIconModule ],
+  imports: [ FormsModule, NgFor, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatAutocompleteModule, MatIconModule ],
   templateUrl: './search-center.component.html',
   styleUrls: ['./search-center.component.scss']
 })

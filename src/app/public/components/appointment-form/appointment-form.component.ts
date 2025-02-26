@@ -56,7 +56,7 @@ export class AppointmentFormComponent {
     }
   }
 
-  clearSelection(): void {
+  goBack(): void {
     this.appointmentForm.resetForm();
     this.backToSearch.emit();
   }
