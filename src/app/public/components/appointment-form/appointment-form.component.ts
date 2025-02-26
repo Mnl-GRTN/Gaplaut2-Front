@@ -1,7 +1,4 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { VaccinationService } from '../../../core/services/vaccination.service';
-import { Center } from '../../../core/services/center';
-import { Vaccination } from '../../../core/services/vaccination';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgIf } from '@angular/common';
@@ -13,6 +10,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+
+import { VaccinationService } from '../../../core/services/vaccination.service';
+import { Center } from '../../../core/services/center';
+import { Vaccination } from '../../../core/services/vaccination';
 
 @Component({
   selector: 'app-appointment-form',
