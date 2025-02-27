@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SearchCenterComponent } from '../../components/search-center/search-center.component';
 import { InfoCardComponent } from "../../components/info-card/info-card.component";
 import { AppointmentFormComponent } from '../../components/appointment-form/appointment-form.component';
@@ -12,6 +12,7 @@ import { Center } from '../../../core/services/center';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  @ViewChild(AppointmentFormComponent) appointmentFormComponent!: AppointmentFormComponent;
   selectedCentre?: Center;
 
   onCentreSelected(centre: Center): void {
@@ -19,11 +20,10 @@ export class HomeComponent {
     const homepage = document.querySelector('.homepage');
     homepage?.classList.add('appointment-active');
 
-  }
+    if (this.appointmentFormComponent) {
+      this.appointmentFormComponent.resetAppointmentForm();
+    }
 
-  onAppointmentSubmitted() {
-    const homepage = document.querySelector('.homepage');
-    homepage?.classList.add('appointment-active');
   }
 
   onBackToSearch() {

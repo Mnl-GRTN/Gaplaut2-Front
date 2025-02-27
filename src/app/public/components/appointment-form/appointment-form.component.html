@@ -30,7 +30,7 @@
     <mat-form-field class="input-full-width">
       <mat-label>Date du rendez-vous</mat-label>
       <input matInput [matDatepicker]="picker" [min]="minDate" placeholder="JJ/MM/AAAA"
-             (dateChange)="onDateSelection($event)" [(ngModel)]="formattedDate" 
+             (dateChange)="onDateSelection($event)" [formControl]="dateControl"
              (input)="validateDate($event)" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
