@@ -10,7 +10,7 @@ import { Center } from './center';  // Importation de la classe Center
 export class CenterService {
 
   private publicApiUrl = 'public/api/centres';
-  private privateApiUrl = 'private/api/centres';
+  private privateApiUrl = 'private/api/centre';
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +26,9 @@ export class CenterService {
       'Authorization': `${authHeader}` // Add Basic Auth header
     });
 
+    console.log('Request URL:', `${this.privateApiUrl}/${id}`);
+    console.log('Request Headers:', headers);
+    console.log('Request Body:', centre);
     const url = `${this.privateApiUrl}/${id}`; // Construct the URL with the centre ID
     return this.http.put(url, centre, { headers });
   }
