@@ -1,0 +1,39 @@
+<div class="dashboard-container">
+  <!-- Side Menu -->
+  <div class="side-menu" *ngIf="isRolesLoaded">
+    <h2>Menu</h2>
+    <button (click)="onLogout()">Logout</button>
+    <ul>
+      <!-- Superadmin Options -->
+      <li *ngIf="authService.hasRole('ROLE_superadmin')">
+        <a routerLink="/dashboard/centres">Centres</a>
+      </li>
+      <li *ngIf="authService.hasRole('ROLE_superadmin')">
+        <a routerLink="/dashboard/config">Config</a>
+      </li>
+
+      <!-- Admin Options -->
+      <li *ngIf="authService.hasRole('ROLE_admin')">
+        <a routerLink="/dashboard/my-centre">My Centre</a>
+      </li>
+      <li *ngIf="authService.hasRole('ROLE_admin')">
+        <a routerLink="/dashboard/planning">Planning</a>
+      </li>
+
+      <!-- Medecin Options -->
+      <li *ngIf="authService.hasRole('ROLE_medecin')">
+        <a routerLink="/dashboard/planning">Planning</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Content Area -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="!isRolesLoaded" class="loading">
+    Loading...
+  </div>
+</div>

@@ -28,7 +28,7 @@ export class AuthComponent {
     if (loginForm.valid) {
       this.authService.login(this.email, this.password).subscribe({
         next: () => {
-          this.router.navigate(['/test']); // Redirection après connexion réussie
+          this.router.navigate(['/dashboard']); // Redirection après connexion réussie
         },
         error: () => {
           this.errorMessage = "Échec de la connexion. Vérifiez vos identifiants.";
