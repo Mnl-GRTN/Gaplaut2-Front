@@ -15,11 +15,12 @@ import { CenterService } from '../../../core/services/center.service';
 import { Center } from '../../../core/services/center';
 
 import { EditCentreFormComponent } from '../edit-centre-form/edit-centre-form.component';
+import { ManageMedecinsComponent } from '../manage-medecins/manage-medecins.component';
 
 @Component({
   selector: 'app-centres-panel',
   standalone: true,
-  imports: [NgFor, FormsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, MatToolbarModule, EditCentreFormComponent, NgIf],
+  imports: [NgFor, FormsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, MatToolbarModule, EditCentreFormComponent, NgIf, ManageMedecinsComponent],
   templateUrl: './centres-panel.component.html',
   styleUrl: './centres-panel.component.scss'
 })
@@ -29,6 +30,7 @@ export class CentresPanelComponent implements OnInit {
   filteredCentres: Center[] = [];
   searchTerm: string = '';
   selectedCentre: Center | undefined;
+  selectedManageCentreId: number | undefined;
 
   constructor(
     private centerService: CenterService,
@@ -76,7 +78,13 @@ export class CentresPanelComponent implements OnInit {
     this.fetchCentres(); // Refresh the list of centres
   }
 
-  manageMedecins(Centre : Center): void {
-    console.log('Manage medecins');
+ // Open the manage medecins view for a centre
+  manageMedecins(centre: Center): void {
+    this.selectedManageCentreId = centre.id; // Set the selected centre ID
   }
+  
+  cancelManageMedecins(): void {
+    this.selectedManageCentreId = undefined; // Ferme la gestion des médecins
+  }
+  
 }

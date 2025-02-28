@@ -1,0 +1,28 @@
+.error-message {
+    color: red;
+    font-weight: bold;
+  }
+
+  .green-button {
+    color: green
+  }
+
+  .manage-medecins-container {
+    margin-top: 20px;
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  mat-list {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  mat-list-item {
+    margin-bottom: 10px;
+  }

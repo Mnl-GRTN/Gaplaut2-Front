@@ -1,11 +1,11 @@
 <div class="centres-panel">
     <!-- Toolbar -->
     <mat-toolbar color="primary">
-      <span>Vaccination Centres</span>
+      <span>Vaccination Centres </span>
     </mat-toolbar>
   
     <!-- Search Bar -->
-    <div class="search-bar">
+    <div *ngIf="!selectedCentre && !selectedManageCentreId" class="search-bar">
       <mat-form-field appearance="outline">
         <mat-label>Search by name, city, or postal code</mat-label>
         <input
@@ -19,7 +19,7 @@
     </div>
   
     <!-- Centres Cards -->
-    <div *ngIf="!selectedCentre" class="centres-list">
+    <div *ngIf="!selectedCentre && !selectedManageCentreId" class="centres-list">
       <mat-card *ngFor="let centre of filteredCentres" class="centre-card">
         <mat-card-header>
           <mat-card-title>{{ centre.centreName }}</mat-card-title>
@@ -47,4 +47,11 @@
       (save)="saveCentre($event)"
       (cancel)="cancelEdit()"
     ></app-edit-centre-form>
+
+    <!-- Manage Medecins Component -->
+    <app-manage-medecins
+    *ngIf="selectedManageCentreId"
+    [centreId]="selectedManageCentreId"
+    (cancel)="cancelManageMedecins()"
+    ></app-manage-medecins>
   </div>
