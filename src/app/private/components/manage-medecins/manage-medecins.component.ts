@@ -18,11 +18,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgIf, NgFor } from '@angular/common';
 
 import { EditUserComponent } from '../edit-user/edit-user.component';
+import { UserTableComponent } from '../user-table/user-table.component';
 
 @Component({
   selector: 'app-manage-medecins',
   standalone: true,
-  imports: [MatListModule, NgIf, MatCardModule, MatIconModule, NgFor, MatInputModule, MatButtonModule, MatToolbarModule, MatTableModule, EditUserComponent],
+  imports: [MatListModule, NgIf, MatCardModule, MatIconModule, NgFor, MatInputModule, MatButtonModule, MatToolbarModule, MatTableModule, EditUserComponent, UserTableComponent],
   templateUrl: './manage-medecins.component.html',
   styleUrl: './manage-medecins.component.scss'
 })

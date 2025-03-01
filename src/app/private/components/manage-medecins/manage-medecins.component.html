@@ -7,105 +7,33 @@
         </mat-card-actions>
 
         <mat-card-content>
-            <!-- Message d'erreur -->
-            <div *ngIf="errorMessage" class="error-message">
-                {{ errorMessage }}
-            </div>
+          <!-- Message d'erreur -->
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
 
-            <div *ngIf="doctors.length > 0 || admins.length > 0">
-                <h4>Utilisateurs du centre</h4>
-                <!-- Tableau des Admins -->
-                <mat-card-actions>
-                    <h5>Admins</h5>
-                    <button mat-icon-button class="green-button" (click)="onAddUser('admin')">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                </mat-card-actions>
-                <p *ngIf="admins.length === 0">Pas d'admins pour ce centre.</p>
-                <table mat-table [dataSource]="admins" *ngIf="admins.length > 0">
-                    <!-- Colonne ID -->
-                    <ng-container matColumnDef="id">
-                      <th mat-header-cell *matHeaderCellDef>ID</th>
-                      <td mat-cell *matCellDef="let admin">{{ admin.id }}</td>
-                    </ng-container>
-                  
-                    <!-- Colonne Nom (First + Last Name) -->
-                    <ng-container matColumnDef="name">
-                      <th mat-header-cell *matHeaderCellDef>Nom</th>
-                      <td mat-cell *matCellDef="let admin">{{ admin.firstName }} {{ admin.lastName }}</td>
-                    </ng-container>
+            
+          <app-user-table
+            [users]="admins"
+            [title]="'Admins'"
+            [addButtonLabel]="'Add Admin'"
+            (addUser)="onAddUser('admin')"
+            (editUser)="onEdit($event)"
+            (removeUser)="onRemove($event)">
+          </app-user-table>
 
-                    <!-- Colonne Email -->
-                    <ng-container matColumnDef="email">
-                      <th mat-header-cell *matHeaderCellDef>Email</th>
-                      <td mat-cell *matCellDef="let admin">{{ admin.email }}</td>
-                    </ng-container>
-                  
-                    <!-- Colonne Actions -->
-                    <ng-container matColumnDef="actions">
-                      <th mat-header-cell *matHeaderCellDef>Actions</th>
-                      <td mat-cell *matCellDef="let admin">
-                        <button mat-icon-button (click)="onEdit(admin)">
-                          <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" (click)="onRemove(admin)">
-                          <mat-icon>delete</mat-icon>
-                        </button>
-                      </td>
-                    </ng-container>
-                  
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  </table>
+          <app-user-table
+            [users]="doctors"
+            [title]="'Doctors'"
+            [addButtonLabel]="'Add Doctor'"
+            (addUser)="onAddUser('doctor')"
+            (editUser)="onEdit($event)"
+            (removeUser)="onRemove($event)">
+          </app-user-table>
 
-                <!-- Tableau des Docteurs -->
-                <mat-card-actions>
-                    <h5>Docteurs</h5>
-                    <button mat-icon-button class="green-button" (click)="onAddUser('doctor')">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                </mat-card-actions>
-                <p *ngIf="doctors.length === 0">Pas de docteurs pour ce centre.</p>
-                <table mat-table [dataSource]="doctors" *ngIf="doctors.length > 0">
-                    <!-- Colonne ID -->
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef>ID</th>
-                        <td mat-cell *matCellDef="let doctors">{{ doctors.id }}</td>
-                      </ng-container>
-                    
-                      <!-- Colonne Nom (First + Last Name) -->
-                      <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Nom</th>
-                        <td mat-cell *matCellDef="let doctors">{{ doctors.firstName }} {{ doctors.lastName }}</td>
-                      </ng-container>
-  
-                      <!-- Colonne Email -->
-                      <ng-container matColumnDef="email">
-                        <th mat-header-cell *matHeaderCellDef>Email</th>
-                        <td mat-cell *matCellDef="let doctors">{{ doctors.email }}</td>
-                      </ng-container>
-                    
-                      <!-- Colonne Actions -->
-                      <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef>Actions</th>
-                        <td mat-cell *matCellDef="let doctors">
-                          <button mat-icon-button (click)="onEdit(doctors)">
-                            <mat-icon>edit</mat-icon>
-                          </button>
-                          <button mat-icon-button color="warn" (click)="onRemove(doctors)">
-                            <mat-icon>delete</mat-icon>
-                          </button>
-                        </td>
-                      </ng-container>
-                    
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            </div>
-
-            <div *ngIf="doctors.length === 0 && admins.length === 0 && !errorMessage">
-                <p>Pas d'utilisateurs pour ce centre.</p>
-            </div>
+          <div *ngIf="doctors.length === 0 && admins.length === 0 && !errorMessage">
+            <p>Pas d'utilisateurs pour ce centre.</p>
+          </div>
         </mat-card-content>
     </mat-card>
 </div>
