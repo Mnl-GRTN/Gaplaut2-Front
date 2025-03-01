@@ -16,6 +16,9 @@
         />
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
+      <button mat-flat-button (click)="addCentre()">
+        <mat-icon>add</mat-icon> Add Centre
+      </button>
     </div>
   
     <!-- Centres Cards -->
@@ -44,6 +47,7 @@
     <app-edit-centre-form
       *ngIf="selectedCentre"
       [centre]="selectedCentre"
+      [isNewCentre]="isNewCentre"
       (save)="saveCentre($event)"
       (cancel)="cancelEdit()"
     ></app-edit-centre-form>

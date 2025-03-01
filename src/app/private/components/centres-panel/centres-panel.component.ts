@@ -31,6 +31,8 @@ export class CentresPanelComponent implements OnInit {
   searchTerm: string = '';
   selectedCentre: Center | undefined;
   selectedManageCentreId: number | undefined;
+  
+  isNewCentre: boolean = false;
 
   constructor(
     private centerService: CenterService,
@@ -63,6 +65,7 @@ export class CentresPanelComponent implements OnInit {
 
   // Open the edit form for a centre
   editCentre(centre: Center): void {
+    this.isNewCentre = false; // Indicate that this is not a new centre
     this.selectedCentre = centre;
   }
 
@@ -71,6 +74,20 @@ export class CentresPanelComponent implements OnInit {
     this.selectedCentre = undefined; // Close the edit form
     this.fetchCentres(); // Refresh the list of centres
   }
+
+  // Add a new centre
+  addCentre(): void {
+    const newCentre: Center = {
+      id: 0, // ID will be assigned by the backend
+      centreName: '',
+      city: '',
+      address: '',
+      postalCode: ''
+    };
+    this.selectedCentre = newCentre;
+    this.isNewCentre = true; // Indicate that this is a new centre
+  }
+
 
   // Handle cancel event from the edit form
   cancelEdit(): void {

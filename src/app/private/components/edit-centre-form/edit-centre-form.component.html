@@ -11,40 +11,40 @@
   
         <!-- Centre Name -->
         <mat-form-field appearance="outline">
-          <mat-label>Centre Name</mat-label>
+          <mat-label>Nom du Centre</mat-label>
           <input matInput formControlName="centreName" required>
           <mat-error *ngIf="editForm.get('centreName')?.hasError('required')">
-            Centre Name is required.
+            Le nom du centre est requis.
           </mat-error>
         </mat-form-field>
   
         <!-- City -->
         <mat-form-field appearance="outline">
-          <mat-label>City</mat-label>
+          <mat-label>Ville</mat-label>
           <input matInput formControlName="city" required>
           <mat-error *ngIf="editForm.get('city')?.hasError('required')">
-            City is required.
+            La ville est requise.
           </mat-error>
         </mat-form-field>
   
         <!-- Address -->
         <mat-form-field appearance="outline">
-          <mat-label>Address</mat-label>
+          <mat-label>Adresse</mat-label>
           <input matInput formControlName="address" required>
           <mat-error *ngIf="editForm.get('address')?.hasError('required')">
-            Address is required.
+            L'adresse est requise.
           </mat-error>
         </mat-form-field>
   
         <!-- Postal Code -->
         <mat-form-field appearance="outline">
-          <mat-label>Postal Code</mat-label>
+          <mat-label>Code Postal</mat-label>
           <input matInput formControlName="postalCode" required>
           <mat-error *ngIf="editForm.get('postalCode')?.hasError('required')">
-            Postal Code is required.
+            Le code postal est requis.
           </mat-error>
           <mat-error *ngIf="editForm.get('postalCode')?.hasError('pattern')">
-            Postal Code must be 5 digits.
+            Le code postal doit être composé de 5 chiffres.
           </mat-error>
         </mat-form-field>
       </mat-card-content>

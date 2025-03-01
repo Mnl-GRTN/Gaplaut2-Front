@@ -13,6 +13,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../../../core/services/auth.service';
 import { CenterService } from '../../../core/services/center.service';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-edit-centre-form',
   standalone: true,
@@ -24,6 +26,7 @@ import { CenterService } from '../../../core/services/center.service';
 
 export class EditCentreFormComponent implements OnInit {
   @Input() centre!: Center; // Input property to receive the centre data
+  @Input() isNewCentre: boolean = false; // Input property to determine if the centre is new
   @Output() save = new EventEmitter<Center>(); // Output event to emit the updated centre
   @Output() cancel = new EventEmitter<void>(); // Output event to cancel editing
 
@@ -32,8 +35,9 @@ export class EditCentreFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private centerService: CenterService, // Inject CenterService
-    private authService: AuthService // Inject AuthService
+    private centerService: CenterService,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -62,14 +66,29 @@ export class EditCentreFormComponent implements OnInit {
       const authHeader = this.authService.getAuthHeaders().get('Authorization'); // Get the auth header
 
       if (authHeader) {
-        this.centerService.updateCentre(updatedCentre.id, updatedCentre, authHeader).subscribe(
-          () => {
-            this.save.emit(updatedCentre); // Emit the updated centre on success
-          },
-          (error: any) => {
-            this.errorMessage = 'Failed to update the centre. Please try again.'; // Display error message
-          }
-        );
+        if(this.isNewCentre) {
+          this.centerService.addCentre(updatedCentre, authHeader).subscribe(
+            () => {
+              this.snackBar.open('Le centre a été ajouté avec succès.', 'Fermer', { duration: 3000 }); // Display success message
+              this.save.emit(updatedCentre); // Emit the updated centre on success
+            },
+            (error: any) => {
+              this.errorMessage = 'Echech de l\'ajout du centre. Veuillez réessayer.'; // Display error message
+              this.snackBar.open('Échec de l\'ajout du centre. Veuillez réessayer.', 'Fermer', { duration: 3000 }); // Display error message
+            }
+          );
+        } else {
+          this.centerService.updateCentre(updatedCentre.id, updatedCentre, authHeader).subscribe(
+            () => {
+              this.snackBar.open('Le centre a été mis à jour avec succès.', 'Fermer', { duration: 3000 }); // Display success message
+              this.save.emit(updatedCentre); // Emit the updated centre on success
+            },
+            (error: any) => {
+              this.errorMessage = 'Echech de la mise à jour du centre. Veuillez réessayer.'; // Display error message
+              this.snackBar.open('Échec de la mise à jour du centre. Veuillez réessayer.', 'Fermer', { duration: 3000 }); // Display error message
+            }
+          );
+        }
       } else {
         this.errorMessage = 'Authorization header is missing.'; // Display error message
       }

@@ -26,10 +26,16 @@ export class CenterService {
       'Authorization': `${authHeader}` // Add Basic Auth header
     });
 
-    console.log('Request URL:', `${this.privateApiUrl}/${id}`);
-    console.log('Request Headers:', headers);
-    console.log('Request Body:', centre);
     const url = `${this.privateApiUrl}/${id}`; // Construct the URL with the centre ID
     return this.http.put(url, centre, { headers });
+  }
+
+  addCentre(centre: Center, authHeader: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${authHeader}` // Add Basic Auth header
+    });
+
+    return this.http.post('private/api/centres', centre, { headers });
   }
 }
