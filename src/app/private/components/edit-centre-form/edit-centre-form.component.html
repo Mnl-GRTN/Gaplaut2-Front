@@ -1,0 +1,60 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Edit Centre</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+  
+        <!-- Centre Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Nom du Centre</mat-label>
+          <input matInput formControlName="centreName" required>
+          <mat-error *ngIf="editForm.get('centreName')?.hasError('required')">
+            Le nom du centre est requis.
+          </mat-error>
+        </mat-form-field>
+  
+        <!-- City -->
+        <mat-form-field appearance="outline">
+          <mat-label>Ville</mat-label>
+          <input matInput formControlName="city" required>
+          <mat-error *ngIf="editForm.get('city')?.hasError('required')">
+            La ville est requise.
+          </mat-error>
+        </mat-form-field>
+  
+        <!-- Address -->
+        <mat-form-field appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input matInput formControlName="address" required>
+          <mat-error *ngIf="editForm.get('address')?.hasError('required')">
+            L'adresse est requise.
+          </mat-error>
+        </mat-form-field>
+  
+        <!-- Postal Code -->
+        <mat-form-field appearance="outline">
+          <mat-label>Code Postal</mat-label>
+          <input matInput formControlName="postalCode" required>
+          <mat-error *ngIf="editForm.get('postalCode')?.hasError('required')">
+            Le code postal est requis.
+          </mat-error>
+          <mat-error *ngIf="editForm.get('postalCode')?.hasError('pattern')">
+            Le code postal doit être composé de 5 chiffres.
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button type="button" (click)="onCancel()">
+          <mat-icon>arrow_back</mat-icon> Cancel
+        </button>
+        <button mat-button type="submit" color="primary" [disabled]="editForm.invalid">
+          <mat-icon>save</mat-icon> Save
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>

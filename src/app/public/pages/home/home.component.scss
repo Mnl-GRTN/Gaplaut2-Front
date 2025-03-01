@@ -1,6 +1,6 @@
 .homepage {
     width: 100vw;
-    height: 75vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,13 +43,61 @@
     padding: 20px;
   }
 
-  .homepage__search {
+  .homepage__content {
+    position: relative;
+    width: 100%;
+    min-height: 200px; /* Ajuste en fonction du contenu */
     display: flex;
-    flex-direction: column;
-    text-align: left;
-    background-color: white;
-    border-radius: 8px;
-    padding: 32px 32px 0px 32px;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+}
+
+  .homepage__search,
+  .homepage__appointment {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      background-color: white;
+      border-radius: 8px;
+      padding: 32px;
+      position: absolute; /* Prevents layout shifting */
+      width: 100%;
+      top: 0;
+      left: -32px;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0s 0.5s;
+  }
+  
+  /* Default state: search is visible */
+  .homepage__search {
+      transform: translateX(0%);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+  }
+  
+  /* Appointment starts off-screen and hidden */
+  .homepage__appointment {
+      transform: translateX(150%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+  }
+  
+  /* When activating appointment mode */
+  .homepage.appointment-active .homepage__search {
+      transform: translateX(-150%);
+      opacity: 0;
+      visibility: visible;
+      pointer-events: none;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0s 0.5s; /* Delayed visibility to avoid overlap */
+  }
+  
+  .homepage.appointment-active .homepage__appointment {
+      transform: translateX(0%);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   }
 
   .homepage__search p {
@@ -67,7 +115,7 @@
     justify-content: space-evenly;
     gap: 24px;
     position: absolute;
-    top: calc(75vh - 40px); // Mi-hauteur de la fin du div homepage
+    top: calc(80vh - 40px); // Mi-hauteur de la fin du div homepage
     width: 100%;
   } 
   

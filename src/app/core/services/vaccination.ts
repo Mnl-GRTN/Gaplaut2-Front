@@ -1,4 +1,5 @@
 export interface Vaccination {
+    id?: number;
     centre: { id: number };
     mail: string;
     phoneNumber: string;

@@ -1,0 +1,32 @@
+.centres-panel {
+    padding: 20px;
+  }
+
+  .search-field {
+    width: 50%;
+    max-width: 500px;
+  }
+  
+  .search-bar {
+    margin-top : 20px;  
+    margin-bottom: 20px;
+    padding: 0 20px;
+    display : flex;
+    justify-content: space-between;
+  }
+  
+  .centres-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .centre-card {
+    width: 300px;
+  }
+  
+  .mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+  }

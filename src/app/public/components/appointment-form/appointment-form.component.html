@@ -1,0 +1,55 @@
+<div *ngIf="selectedCentre">
+  <div class="appointment-header">
+    <button mat-flat-button (click)="goBack()" class="back-button">Retour</button>
+    <span *ngIf="!isSubmitted">Vous allez prendre un rendez-vous pour le {{ selectedCentre.centreName }}</span>
+  </div>
+  
+  <form *ngIf="!isSubmitted" (ngSubmit)="submitAppointment()" class="appointment-form" #appointmentForm="ngForm">
+    <!-- Champs du formulaire (Email, Téléphone, Nom, Prénom, Date) -->
+    <mat-form-field class="input-full-width">
+      <mat-label>Prénom</mat-label>
+      <input matInput type="text" [(ngModel)]="vaccination.first_name" name="first_name" required />
+    </mat-form-field>
+
+    <mat-form-field class="input-full-width">
+      <mat-label>Nom de famille</mat-label>
+      <input matInput type="text" [(ngModel)]="vaccination.last_name" name="last_name" required />
+    </mat-form-field>
+
+    <mat-form-field class="input-full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [(ngModel)]="vaccination.mail" name="mail" #email="ngModel" required />
+    </mat-form-field>
+
+    <mat-form-field class="input-full-width">
+      <mat-label>Numéro de téléphone</mat-label>
+      <input matInput type="tel" [(ngModel)]="vaccination.phoneNumber" name="phoneNumber"
+             #phone="ngModel" required maxlength="10" (input)="validatePhone($event)">
+    </mat-form-field>
+
+    <mat-form-field class="input-full-width">
+      <mat-label>Date du rendez-vous</mat-label>
+      <input matInput [matDatepicker]="picker" [min]="minDate" placeholder="JJ/MM/AAAA"
+             (dateChange)="onDateSelection($event)" [formControl]="dateControl"
+             (input)="validateDate($event)" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    
+
+    <button mat-flat-button type="submit" [disabled]="!vaccination.date || !vaccination.mail || !vaccination.phoneNumber || !vaccination.first_name || !vaccination.last_name || dateInvalid || phoneInvalid">
+      Prendre rendez-vous
+    </button>
+
+    <div *ngIf="appointmentForm.invalid && appointmentForm.touched || errorMessage != '' || dateInvalid || phoneInvalid">
+      <mat-error *ngIf="errorMessage != ''">{{ errorMessage }}</mat-error>
+      <mat-error *ngIf="email.invalid && email.touched">Entrez un email valide.</mat-error>
+      <mat-error *ngIf="phoneInvalid || phone.invalid && phone.touched">Entrez un numéro de téléphone valide (10 chiffres).</mat-error>
+      <mat-error *ngIf="appointmentForm.controls['last_name']?.invalid && appointmentForm.controls['last_name']?.touched">Le nom de famille est requis.</mat-error>
+      <mat-error *ngIf="appointmentForm.controls['first_name']?.invalid && appointmentForm.controls['first_name']?.touched">Le prénom est requis.</mat-error>
+      <mat-error *ngIf="dateInvalid">Format de date invalide (JJ/MM/AAAA).</mat-error>
+    </div>
+  </form>
+
+  <p *ngIf="isSubmitted" class="appointment-confirmation">Votre rendez-vous a été pris pour le {{ selectedCentre.centreName }} le {{ vaccination.date }}</p>
+</div>

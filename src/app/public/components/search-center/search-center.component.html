@@ -1,96 +1,18 @@
-<!-- home.component.html -->
-<div class="search-container">
-  <!-- Formulaire de prise de rendez-vous affiché si un centre est sélectionné -->
-  <div *ngIf="selectedCentre; else searchSection" class="appointment-section">
-    <button mat-flat-button (click)="selectedCentre = undefined" class="back-button">Retour</button>
-    <p>Prendre un rendez-vous avec {{ selectedCentre.centreName }}</p>
-    <form (ngSubmit)="submitAppointment()" class="appointment-form">
-      
-      <!-- Champ mail -->
-      <mat-form-field class="input-full-width">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          type="email"
-          [(ngModel)]="vaccination.mail"
-          id="mail"
-          name="mail"
-          required
-        />
-      </mat-form-field>
-      
-      <!-- Champ numéro de téléphone -->
-      <mat-form-field class="input-full-width">
-        <mat-label>Numéro de téléphone</mat-label>
-        <input
-          matInput
-          type="tel"
-          [(ngModel)]="vaccination.phoneNumber"
-          id="phoneNumber"
-          name="phoneNumber"
-          required
-        />
-      </mat-form-field>
-      
-      <!-- Champ nom de famille -->
-      <mat-form-field class="input-full-width">
-        <mat-label>Nom de famille</mat-label>
-        <input
-          matInput
-          type="text"
-          [(ngModel)]="vaccination.last_name"
-          id="last_name"
-          name="last_name"
-          required
-        />
-      </mat-form-field>
-      
-      <!-- Champ prénom -->
-      <mat-form-field class="input-full-width">
-        <mat-label>Prénom</mat-label>
-        <input
-          matInput
-          type="text"
-          [(ngModel)]="vaccination.first_name"
-          id="first_name"
-          name="first_name"
-          required
-        />
-      </mat-form-field>
-      
-      <!-- Champ date de rendez-vous -->
-      <mat-form-field class="input-full-width">
-        <mat-label>Date du rendez-vous</mat-label>
-        <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY"
-         (dateInput)="onDateSelection($event)">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      
-
-      <!-- Bouton de soumission -->
-      <button mat-flat-button type="submit" class="submit-button" [disabled]="!vaccination.date || !vaccination.mail || !vaccination.phoneNumber || !vaccination.first_name || !vaccination.last_name">
-        Prendre rendez-vous
-      </button>
-    </form>
-  </div>
-
-  <!-- Section de recherche de ville qui s'affiche lorsque aucun centre n'est sélectionné -->
-  <ng-template #searchSection>
-    <mat-form-field class="input-full-width">
-      <mat-label>Saisissez votre ville</mat-label>
-      <input
-        type="text"
-        matInput
-        [(ngModel)]="searchTerm"
-        [matAutocomplete]="auto"
-        (input)="filterCentres()"
-        placeholder="Ex: Nancy"
-      />
-      <mat-icon matPrefix>location_on</mat-icon>
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let centre of filteredCentres" (click)="chooseCentre(centre)">
-          {{ centre.centreName }} - {{ centre.city }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+<!-- search-center.component.html -->
+<mat-form-field class="input-full-width">
+  <mat-label>Saisissez votre ville</mat-label>
+  <input
+    type="text"
+    matInput
+    [(ngModel)]="searchTerm"
+    [matAutocomplete]="auto"
+    (input)="filterCentres()"
+    placeholder="Ex: Nancy"
+  />
+  <mat-icon matPrefix>location_on</mat-icon>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let centre of filteredCentres" (click)="chooseCentre(centre)">
+      {{ centre.centreName }} - {{ centre.city }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

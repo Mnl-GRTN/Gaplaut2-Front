@@ -13,8 +13,21 @@ export class VaccinationService {
 
     constructor(private http: HttpClient) { }
 
-    postVaccination(vaccination: Vaccination): Observable<Vaccination> {
+    // POST request to create a vaccination appointment
+    postVaccinationAppointment(vaccination: Vaccination): Observable<Vaccination> {
         return this.http.post<Vaccination>(this.apiUrl, vaccination);
+    }
+
+    // GET request to fetch all vaccination appointments
+    getVaccinationAppointments(centerId: number, date: string, authHeader: string): Observable<Vaccination[]> {
+        const url = `private/api/vaccinations/${centerId}/${date}`;
+        return this.http.get<Vaccination[]>(url, { headers: { 'Authorization': authHeader } });
+    }
+
+    // PUT request to update (validate) a vaccination appointment
+    updateVaccinationAppointment(vaccinationId: number, authHeader: string): Observable<any> {
+        const url = `private/api/vaccination/validation/${vaccinationId}`;
+        return this.http.put(url, null, { headers: { 'Authorization': authHeader } });
     }
 
 }

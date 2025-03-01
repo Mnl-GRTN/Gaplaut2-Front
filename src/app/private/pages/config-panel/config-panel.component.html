@@ -1,0 +1,40 @@
+<div class="config-panel">
+    <!-- Toolbar -->
+    <mat-toolbar color="primary">
+      <span>Gestion des superadmins</span>
+    </mat-toolbar>
+
+<div class="manage-superadmins-container" *ngIf="!selectedUser">
+    <mat-card>
+        <mat-card-content>
+            <!-- Message d'erreur -->
+            <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+            </div>
+
+            <app-user-table
+                [users]="superadmins"
+                [title]="'Superadmins'"
+                [addButtonLabel]="'Add Superadmin'"
+                (addUser)="onAddSuperAdmin()"
+                (editUser)="onEdit($event)"
+                (removeUser)="onRemove($event)">
+            </app-user-table>
+
+            <div *ngIf="superadmins.length === 0 && !errorMessage">
+                <p>Pas d'utilisateurs pour ce centre.</p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<app-edit-user
+        *ngIf="selectedUser"
+        [user]="selectedUser"
+        [newUser]="newUser"
+        (save)="onSaveUser($event)"
+        (cancel)="onCancelEdit()">
+</app-edit-user>
+
+
+                    

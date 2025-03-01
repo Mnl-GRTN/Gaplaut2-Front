@@ -1,13 +1,24 @@
+<app-navbar></app-navbar>
 <div class="homepage">
-    <div class="homepage__background"></div>
-    <div class="homepage__overlay">
-        <h3>Votre santé et celle de vos proches est entre vos mains</h3>
-        <div class="homepage__search">
-            <p>Entrez votre ville pour découvrir votre centre de vaccination le plus proche.</p>
-            <app-search-center></app-search-center>
-        </div>
-    </div> 
+  <div class="homepage__background"></div>
+  <div class="homepage__overlay">
+      <h3>Votre santé et celle de vos proches est entre vos mains</h3>
+      
+      <!-- Nouveau conteneur pour stabiliser la mise en page -->
+      <div class="homepage__content">
+          <div class="homepage__search">
+              <p>Entrez votre ville pour découvrir votre centre de vaccination le plus proche.</p>
+              <app-search-center (centreSelected)="onCentreSelected($event)"></app-search-center>
+          </div>
+          <div class="homepage__appointment">
+              <app-appointment-form [selectedCentre]="selectedCentre" 
+                  (backToSearch)="onBackToSearch()">
+              </app-appointment-form>
+          </div>
+      </div>
+  </div> 
 </div>
+
 
 <div class="info-cards">
     <app-info-card

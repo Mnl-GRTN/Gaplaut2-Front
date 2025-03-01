@@ -1,0 +1,64 @@
+<div class="dashboard-container">
+  <!-- Side Menu -->
+  <mat-sidenav-container class="side-menu-container">
+    <mat-sidenav mode="side" opened *ngIf="isRolesLoaded" class="side-menu">
+      <!-- Side Menu Header -->
+      <div class="side-menu-header">
+        <mat-toolbar color="primary" class="menu-toolbar">
+          <span class="menu-title">Menu</span>
+        </mat-toolbar>
+      </div>
+
+      <!-- Side Menu Content -->
+      <mat-nav-list class="menu-list">
+        <!-- Superadmin Options -->
+        <ng-container *ngIf="authService.hasRole('ROLE_superadmin')">
+          <mat-list-item class="menu-item" routerLink="/dashboard/centres">
+            <mat-icon matListItemIcon class="menu-icon">business</mat-icon>
+            <span class="menu-item-text">Centres</span>
+          </mat-list-item>
+          <mat-list-item class="menu-item" routerLink="/dashboard/config">
+            <mat-icon matListItemIcon class="menu-icon">settings</mat-icon>
+            <span class="menu-item-text">Config</span>
+          </mat-list-item>
+        </ng-container>
+
+        <!-- Admin Options -->
+        <ng-container *ngIf="authService.hasRole('ROLE_admin')">
+          <mat-list-item class="menu-item" routerLink="/dashboard/my-centre">
+            <mat-icon matListItemIcon class="menu-icon">home</mat-icon>
+            <span class="menu-item-text">My Centre</span>
+          </mat-list-item>
+          <mat-list-item class="menu-item" routerLink="/dashboard/planning">
+            <mat-icon matListItemIcon class="menu-icon">calendar_today</mat-icon>
+            <span class="menu-item-text">Planning</span>
+          </mat-list-item>
+        </ng-container>
+
+        <!-- Medecin Options -->
+        <ng-container *ngIf="authService.hasRole('ROLE_doctor')">
+          <mat-list-item class="menu-item" routerLink="/dashboard/planning">
+            <mat-icon matListItemIcon class="menu-icon">calendar_today</mat-icon>
+            <span class="menu-item-text">Planning</span>
+          </mat-list-item>
+        </ng-container>
+      </mat-nav-list>
+
+      <!-- Logout Button Fixed at Bottom -->
+      <div class="logout-section">
+        <button mat-raised-button color="warn" class="logout-button" (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    </mat-sidenav>
+
+    <!-- Content Area -->
+    <mat-sidenav-content class="content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+    <!-- Loading Indicator -->
+    <mat-spinner *ngIf="!isRolesLoaded" class="loading" diameter="50"></mat-spinner>
+  </mat-sidenav-container>
+</div>

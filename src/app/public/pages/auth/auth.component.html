@@ -1,19 +1,58 @@
+<app-navbar></app-navbar>
+
 <div class="login-container">
-    <h2>Connexion</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div>
-        <label for="email">Email :</label>
-        <input type="email" id="email" [(ngModel)]="email" name="email" required>
-      </div>
-  
-      <div>
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" [(ngModel)]="password" name="password" required>
-      </div>
-  
-      <button type="submit">Se connecter</button>
-    </form>
-  
-    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-  </div>
-  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Connexion</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" class="login-form">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            #emailCtrl="ngModel"
+          />
+          <mat-error *ngIf="emailCtrl.hasError('required')">L'email est requis.</mat-error>
+          <!-- <mat-error *ngIf="emailCtrl.hasError('email')">Format d'email invalide.</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Mot de passe</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            [(ngModel)]="password"
+            name="password"
+            required
+            #passwordCtrl="ngModel"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Afficher ou masquer le mot de passe'"
+          >
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="passwordCtrl.hasError('required')">Le mot de passe est requis.</mat-error>
+          <!-- <mat-error *ngIf="passwordCtrl.hasError('minlength')">
+            Le mot de passe doit comporter au moins 6 caractères.
+          </mat-error> -->
+        </mat-form-field>
+
+        <div class="login-actions">
+          <button mat-flat-button type="submit">Se connecter</button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-footer *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </mat-card-footer>
+  </mat-card>
+</div>

@@ -1,0 +1,61 @@
+<div class="centres-panel">
+    <!-- Toolbar -->
+    <mat-toolbar color="primary">
+      <span>Gestion des centres de vaccinations </span>
+    </mat-toolbar>
+  
+    <!-- Search Bar -->
+    <div *ngIf="!selectedCentre && !selectedManageCentreId" class="search-bar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search by name, city, or postal code</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterCentres()"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <button mat-flat-button (click)="addCentre()">
+        <mat-icon>add</mat-icon> Add Centre
+      </button>
+    </div>
+  
+    <!-- Centres Cards -->
+    <div *ngIf="!selectedCentre && !selectedManageCentreId" class="centres-list">
+      <mat-card *ngFor="let centre of filteredCentres" class="centre-card">
+        <mat-card-header>
+          <mat-card-title>{{ centre.centreName }}</mat-card-title>
+          <mat-card-subtitle>{{ centre.city }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Address:</strong> {{ centre.address }}</p>
+          <p><strong>Postal Code:</strong> {{ centre.postalCode }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="editCentre(centre)">
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+          <button mat-button color="accent" (click)="manageMedecins(centre)">
+            <mat-icon>people</mat-icon> Users
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  
+    <!-- Edit Centre Form -->
+    <app-edit-centre-form
+      *ngIf="selectedCentre"
+      [centre]="selectedCentre"
+      [isNewCentre]="isNewCentre"
+      (save)="saveCentre($event)"
+      (cancel)="cancelEdit()"
+    ></app-edit-centre-form>
+
+    <!-- Manage Medecins Component -->
+    <app-manage-medecins
+    *ngIf="selectedManageCentreId"
+    [centreId]="selectedManageCentreId"
+    (cancel)="cancelManageMedecins()"
+    ></app-manage-medecins>
+  </div>
