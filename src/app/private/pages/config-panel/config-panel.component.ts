@@ -17,11 +17,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { NgIf } from '@angular/common';
 
-import { EditUserComponent } from '../edit-user/edit-user.component';
-import { UserTableComponent } from '../user-table/user-table.component';
+import { EditUserComponent } from '../../components/edit-user/edit-user.component';
+import { UserTableComponent } from '../../components/user-table/user-table.component';
 
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-config-panel',

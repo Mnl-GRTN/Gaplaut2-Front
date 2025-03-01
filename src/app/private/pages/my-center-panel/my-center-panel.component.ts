@@ -17,11 +17,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 
 
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserTableComponent } from '../user-table/user-table.component';
-import { EditUserComponent } from '../edit-user/edit-user.component';
+import { UserTableComponent } from '../../components/user-table/user-table.component';
+import { EditUserComponent } from '../../components/edit-user/edit-user.component';
 
 import { NgIf } from '@angular/common';
 

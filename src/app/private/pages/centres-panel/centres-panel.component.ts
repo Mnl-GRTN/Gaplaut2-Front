@@ -14,8 +14,8 @@ import { AuthService } from '../../../core/services/auth.service';
 import { CenterService } from '../../../core/services/center.service';
 import { Center } from '../../../core/services/center';
 
-import { EditCentreFormComponent } from '../edit-centre-form/edit-centre-form.component';
-import { ManageMedecinsComponent } from '../manage-medecins/manage-medecins.component';
+import { EditCentreFormComponent } from '../../components/edit-centre-form/edit-centre-form.component';
+import { ManageMedecinsComponent } from '../../components/manage-medecins/manage-medecins.component';
 
 @Component({
   selector: 'app-centres-panel',

@@ -7,7 +7,7 @@ import { Vaccination } from '../../../core/services/vaccination';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';

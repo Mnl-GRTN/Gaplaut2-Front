@@ -4,11 +4,11 @@ import { AuthComponent } from './public/pages/auth/auth.component';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './core/guards/auth.guard';
 import { DashboardComponent } from './private/pages/dashboard/dashboard.component';
-import { CentresPanelComponent } from './private/components/centres-panel/centres-panel.component';
-import { ConfigPanelComponent } from './private/components/config-panel/config-panel.component';
-import { WelcomeBoardComponent } from './private/components/welcome-board/welcome-board.component';
-import { MyCenterPanelComponent } from './private/components/my-center-panel/my-center-panel.component';
-import { PlanningPanelComponent } from './private/components/planning-panel/planning-panel.component';
+import { CentresPanelComponent } from './private/pages/centres-panel/centres-panel.component';
+import { ConfigPanelComponent } from './private/pages/config-panel/config-panel.component';
+import { WelcomeBoardComponent } from './private/pages/welcome-board/welcome-board.component';
+import { MyCenterPanelComponent } from './private/pages/my-center-panel/my-center-panel.component';
+import { PlanningPanelComponent } from './private/pages/planning-panel/planning-panel.component';
 
 export const routes: Routes = [
 
