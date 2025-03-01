@@ -17,7 +17,7 @@
                 <!-- Tableau des Admins -->
                 <mat-card-actions>
                     <h5>Admins</h5>
-                    <button mat-icon-button class="green-button">
+                    <button mat-icon-button class="green-button" (click)="onAddUser('admin')">
                         <mat-icon>add</mat-icon>
                     </button>
                 </mat-card-actions>
@@ -61,7 +61,7 @@
                 <!-- Tableau des Docteurs -->
                 <mat-card-actions>
                     <h5>Docteurs</h5>
-                    <button mat-icon-button class="green-button">
+                    <button mat-icon-button class="green-button" (click)="onAddUser('doctor')">
                         <mat-icon>add</mat-icon>
                     </button>
                 </mat-card-actions>
@@ -113,6 +113,7 @@
 <app-edit-user
         *ngIf="selectedUser"
         [user]="selectedUser"
+        [newUser]="newUser"
         (save)="onSaveUser($event)"
         (cancel)="onCancelEdit()">
     </app-edit-user>

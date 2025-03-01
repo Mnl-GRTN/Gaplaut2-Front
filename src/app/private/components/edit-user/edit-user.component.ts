@@ -39,6 +39,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EditUserComponent implements OnInit {
   @Input() user!: Doctor | undefined; // Input property to receive the user data
+  @Input() newUser: boolean = false; // Input property to determine if the user is new
   @Output() save = new EventEmitter<Doctor>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -48,6 +49,7 @@ export class EditUserComponent implements OnInit {
 
   isCentreDisabled: boolean = false;
   originalPassword: string = '';
+  private previousCentreId: number | null = null;
 
   constructor(
     private doctorService: DoctorService,
@@ -70,10 +72,13 @@ export class EditUserComponent implements OnInit {
         centre: { id: 0, centreName: '', city: '', address: '', postalCode: '' },
         passwordChanged: true, // For new users, always hash the password
       };
-    }
-    else {
+    } else {
       this.originalPassword = this.user.password; // Store the original password
       this.user.passwordChanged = false; // Default to false for existing users
+
+      if (this.user.roles.some((role) => role.id == 1)) {
+        this.isCentreDisabled = true; // Disable the centre field
+      }
     }
 
     this.fetchRoles();
@@ -89,7 +94,7 @@ export class EditUserComponent implements OnInit {
           this.roles = roles;
         },
         (error: any) => {
-          this.errorMessage = 'Failed to fetch roles.';
+          this.errorMessage = 'Echo de la récupération des rôles.';
         }
       );
     } else {
@@ -103,57 +108,79 @@ export class EditUserComponent implements OnInit {
         this.centres = centres;
       },
       (error: any) => {
-        this.errorMessage = 'Failed to fetch centres.';
+        this.errorMessage = 'Echec de la récupération des centres.';
       }
     );
   }
 
-  onRoleChange(role: string): void {
-    // Check if the selected role is 'superadmin'
-    if (role == '1') {
-      this.user!.centre.id = 1; // Set centre to 1 when role is superadmin
-      this.isCentreDisabled = true; // Disable the centre input field
+  onRoleChange(roleId: string): void {
+    if (roleId == '1') { // If superadmin
+      this.previousCentreId = this.user!.centre.id; // Save the previous centre
+      this.user!.centre.id = 1; // Set the centre to 1
+      this.isCentreDisabled = true; // Disable the centre field
     } else {
-      this.isCentreDisabled = false; // Enable the centre field for other roles
+      if (this.previousCentreId) {
+        this.user!.centre.id = this.previousCentreId; // Restore the previous centre
+      }
+      this.isCentreDisabled = false; // Enable the centre field
     }
   }
 
   onSubmit(): void {
-    if (this.user) {
+    if (!this.user || !this.user.firstName || !this.user.lastName || 
+      !this.user.email || !this.user.password || !this.user.centre.id) {
+      this.errorMessage = 'Tous les champs doivent être remplis.';
+      return;
+    }
 
-      if (this.user.password !== this.originalPassword) {
-        this.user.passwordChanged = true;
-      }
+    if (this.user.roles[0].id !== 1 && this.user.centre.id === 1) {
+      this.errorMessage = 'Un centre doit être sélectionné pour les utilisateurs non superadmins.';
+      return;
+    }
 
-      console.log("isPasswordChanged", this.user.passwordChanged);
-      const updatedDoctor: Doctor = {
-        ...this.user,
-      };
+    if (this.user.password !== this.originalPassword) {
+      this.user.passwordChanged = true;
+    }
 
-      // Check if the role is 'superadmin' and modify the centerId accordingly
-      if (updatedDoctor.roles.some((role) => role.roleName === 'superadmin')) {
-        updatedDoctor.centre.id = 1; // Set centre to 1 when the role is superadmin
-        this.isCentreDisabled = true; // Disable the centre field in the form (e.g., by setting the UI flag)
-      }
+    const updatedDoctor: Doctor = {
+      ...this.user,
+    };
 
-      const authHeader = this.authService.getAuthHeaders().get('Authorization'); // Get the auth header
+    if (updatedDoctor.roles.some((role) => role.roleName === 'superadmin')) {
+      updatedDoctor.centre.id = 1; // Set centre to 1 when the role is superadmin
+      this.isCentreDisabled = true; // Disable the centre field in the form
+    }
 
-      if (authHeader) {
-        this.doctorService.updateDoctorById(updatedDoctor.id, updatedDoctor, authHeader).subscribe(
-          () => {
-            this.save.emit(updatedDoctor); // Emit the updated doctor on success
-            this.snackBar.open('User updated successfully!', 'Close', {
-              duration: 3000, // Display for 3 seconds
-              panelClass: ['success-snackbar'], // Optional: Add custom styling
-            });
-          },
-          (error: any) => {
-            this.errorMessage = 'Failed to update the doctor. Please try again.'; // Display error message
-          }
-        );
-      } else {
-        this.errorMessage = 'Authorization header is missing.'; // Display error message
-      }
+    const authHeader = this.authService.getAuthHeaders().get('Authorization'); // Get the auth header
+
+    if (authHeader) {
+
+    if(this.newUser) {
+      this.doctorService.addDoctor(updatedDoctor, authHeader).subscribe(
+        () => {
+          this.save.emit(updatedDoctor); // Emit the updated doctor on success
+          this.snackBar.open('User added successfully!', 'Close', {
+            duration: 3000, // Display for 3 seconds
+          });
+        },
+        (error: any) => {
+          this.errorMessage = error.message || 'Erreur lors de l\'ajout de l\'utilisateur.'; // Display error message
+        }
+      );
+    } else
+      this.doctorService.updateDoctorById(updatedDoctor.id, updatedDoctor, authHeader).subscribe(
+        () => {
+          this.save.emit(updatedDoctor); // Emit the updated doctor on success
+          this.snackBar.open('User updated successfully!', 'Close', {
+            duration: 3000, // Display for 3 seconds
+          });
+        },
+        (error: any) => {
+          this.errorMessage = error.message || 'Erreur lors de la mise à jour de l\'utilisateur.'; // Display error message
+        }
+      );
+    } else {
+      this.errorMessage = 'Authorization header is missing.'; // Display error message
     }
   }
 

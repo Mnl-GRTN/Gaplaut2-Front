@@ -34,6 +34,8 @@ export class ManageMedecinsComponent implements OnInit {
   errorMessage: string | null = null;
   selectedUser: Doctor | null = null
 
+  newUser: boolean = false;
+
   displayedColumns: string[] = ['id', 'name', 'email', 'actions']; 
 
   constructor(
@@ -90,6 +92,7 @@ export class ManageMedecinsComponent implements OnInit {
 
   onEdit(user: Doctor): void {
     this.selectedUser = user; // Set selected user for editing
+    this.newUser = false; // Reset the flag for new user
   }
 
   onSaveUser(user: Doctor): void {
@@ -100,5 +103,20 @@ export class ManageMedecinsComponent implements OnInit {
 
   onCancelEdit(): void {
     this.selectedUser = null; // Reset if cancelled
+  }
+
+  onAddUser(role: 'admin' | 'doctor'): void {
+    const newUser: Doctor = {
+      id: 0, // ID will be assigned by the backend
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      roles: [{ id: role === 'admin' ? 2 : 3, roleName: role }], // Assign role ID based on role
+      centre: { id: this.centreId, centreName: '', city: '', address: '', postalCode: '' }, // Assign the current centre
+      passwordChanged: true // For new users, always hash the password
+    };
+    this.selectedUser = newUser; // Set the new user for editing
+    this.newUser = true; // Set the flag for new user
   }
 }

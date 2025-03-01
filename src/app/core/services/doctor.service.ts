@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Doctor } from './doctor'; // Import the Doctor interface
+import { catchError } from 'rxjs/operators';  // Importe catchError
+import { throwError } from 'rxjs';  // Importer throwError pour renvoyer une erreur
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +40,24 @@ export class DoctorService {
     });
 
     const url = `private/api/doctor/${doctorId}`; // Construct the URL with the doctor ID
-    return this.http.put(url, doctor, { headers });
+    return this.http.put(url, doctor, { headers }).pipe(
+      catchError(error => {
+        return throwError(() => new Error(error.error || 'Error updating doctor'));
+      })
+    );
+  }
+
+  addDoctor(doctor: Doctor, authHeader: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': authHeader // Add Basic Auth header
+    });
+
+    return this.http.post('private/api/doctors', doctor, { headers }).pipe(
+      catchError(error => {
+        return throwError(() => new Error(error.error || 'Error adding doctor'));
+      })
+    );
   }
 
 }
