@@ -20,6 +20,9 @@ import { NgIf, NgFor } from '@angular/common';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { UserTableComponent } from '../user-table/user-table.component';
 
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+
 @Component({
   selector: 'app-config-panel',
   standalone: true,
@@ -41,7 +44,8 @@ export class ConfigPanelComponent {
   constructor(
     private doctorService: DoctorService,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -79,17 +83,31 @@ export class ConfigPanelComponent {
   }
   
   onRemove(user: Doctor): void {
-    const authHeader = this.authService.getAuthHeaders().get('Authorization');
-    if (authHeader) {
-    this.doctorService.removeDoctorById(user.id, authHeader).subscribe(
-      () => {
-        this.fetchDoctors(); // Refresh the list of doctors
-        this.snackBar.open('Utilisateur supprimé avec succès.', 'Fermer', { duration: 3000 });
+    // Open the confirmation dialog
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { message: 'Etes-vous sûr de vouloir supprimer cet utilisateur?' }
+    });
+
+    // Handle the result of the dialog
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // User confirmed deletion
+        const authHeader = this.authService.getAuthHeaders().get('Authorization');
+        if (authHeader) {
+          this.doctorService.removeDoctorById(user.id, authHeader).subscribe(
+            () => {
+              this.fetchDoctors(); // Refresh the list of doctors
+              this.snackBar.open('Utilisateur supprimé avec succès.', 'Fermer', { duration: 3000 });
+            },
+            (error) => {
+              this.errorMessage = 'Erreur lors de la suppression de l\'utilisateur.'; // Display error message
+            }
+          );
+        } else {
+          this.errorMessage = 'Authorization header is missing.';
+        }
       }
-    );
-    } else {
-      this.errorMessage = 'Authorization header is missing.';
-    }
+    });
   }
 
   // Edit User Component
