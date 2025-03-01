@@ -22,7 +22,7 @@ export const routes: Routes = [
           { path: 'centres', component: CentresPanelComponent, canActivate: [AuthGuard], data: { roles: ['ROLE_superadmin'] } },
           { path: 'config', component: ConfigPanelComponent, canActivate: [AuthGuard], data: { roles: ['ROLE_superadmin'] } },
           { path: 'my-centre', component: MyCenterPanelComponent, canActivate:[AuthGuard], data: { roles: ['ROLE_admin'] } },
-          { path: 'planning', component: PlanningPanelComponent, data: { roles: ['ROLE_admin', 'ROLE_medecin'] } },
+          { path: 'planning', component: PlanningPanelComponent, canActivate: [AuthGuard], data: { roles: ['ROLE_admin', 'ROLE_doctor'] } },
           { path: '', component: WelcomeBoardComponent, pathMatch: 'full' } // Default route for dashboard
         ]
       },

@@ -36,7 +36,7 @@
         </ng-container>
 
         <!-- Medecin Options -->
-        <ng-container *ngIf="authService.hasRole('ROLE_medecin')">
+        <ng-container *ngIf="authService.hasRole('ROLE_doctor') || authService.hasRole('ROLE_admin')">
           <mat-list-item class="menu-item" routerLink="/dashboard/planning">
             <mat-icon matListItemIcon class="menu-icon">calendar_today</mat-icon>
             <span class="menu-item-text">Planning</span>
