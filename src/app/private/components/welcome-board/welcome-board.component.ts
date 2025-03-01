@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from '../../../core/services/auth.service';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -20,16 +22,12 @@ import { MatToolbar } from '@angular/material/toolbar';
 })
 export class WelcomeBoardComponent implements OnInit {
 
-  user: { name: string, email: string, role: string } | null = null;
+  userInfo: { email: string, role: string, centre: number } | null = null;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     // Simuler la récupération des informations de l'utilisateur
-    this.user = {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      role: 'Admin'
-    };
+    this.userInfo = this.authService.getUserInfo();
   }
 }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private apiUrl = 'private/api/auth/user-info'; // Endpoint to fetch user info
   private userRoles: string[] = [];
+  private userInfo: { email: string, role: string, centre: number } | null = null; // Store user info
 
   constructor(private http: HttpClient, private router: Router) {
     this.fetchUserInfo(); // Fetch user info on service initialization
@@ -24,6 +25,12 @@ export class AuthService {
       return this.http.get<any>(this.apiUrl, { headers }).pipe(
         tap((userInfo) => {
           this.userRoles = userInfo.authorities; // Store user roles
+          this.userInfo = { // Store user info
+            email: userInfo.username,
+            // Extract the role from the authority string (e.g., 'ROLE_ADMIN' -> 'ADMIN')
+            role: userInfo.authorities[0].split('_')[1],
+            centre: userInfo.centre
+          };
         }),
         catchError((error) => {
           console.error('Error fetching user info:', error);
@@ -79,5 +86,10 @@ export class AuthService {
   // Get the current user's roles
   getRoles(): string[] {
     return this.userRoles;
+  }
+
+  // Get the stored user info
+  getUserInfo(): { email: string, role: string, centre: number } | null {
+    return this.userInfo;
   }
 }
