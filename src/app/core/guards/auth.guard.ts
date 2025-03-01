@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
       map((userInfo) => {
         const requiredRoles = route.data['roles'] as Array<string>;
         if (requiredRoles && !requiredRoles.some(role => this.authService.hasRole(role))) {
-          this.router.navigate(['/login']); // Redirect to unauthorized page
+          this.router.navigate(['/dashboard']); // Redirect to unauthorized page
           return false; // Return false if the user does not have the required roles
         }
         return true; // Return true if the user is authenticated and has the required roles
