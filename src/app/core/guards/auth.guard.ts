@@ -13,9 +13,6 @@ export class AuthGuard implements CanActivate {
   // Check if the user is authenticated and has the required roles to access the route
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
-    console.log('AuthGuard#canActivate called');
-    console.log ('route.data[roles]: ', route.data['roles']);
-    console.log ('route.data: ', route.data);
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/dashboard'], { queryParams: { returnUrl: state.url } });
       return of(false); // Return false if the user is not authenticated

@@ -56,7 +56,6 @@ export class ManageMedecinsComponent implements OnInit {
     if (authHeader) {
       this.doctorService.getDoctorsByCentre(this.centreId, authHeader).subscribe(
         (data) => {
-          console.log(data);
           this.doctors = data.filter(user => user.roles.some(role => role.roleName === 'doctor')); // Filter doctors
           this.admins = data.filter(user => user.roles.some(role => role.roleName === 'admin')); // Filter admins
         },
@@ -78,7 +77,6 @@ export class ManageMedecinsComponent implements OnInit {
   }
 
   onRemove(user: Doctor): void {
-    console.log('Remove user:', user);
     const authHeader = this.authService.getAuthHeaders().get('Authorization');
     if (authHeader) {
     this.doctorService.removeDoctorById(user.id, authHeader).subscribe(
@@ -100,7 +98,6 @@ export class ManageMedecinsComponent implements OnInit {
   }
 
   onSaveUser(user: Doctor): void {
-    console.log('User saved:', user);
     // Handle saving the user (send to API)
     this.selectedUser = null; // Reset after saving
     this.fetchDoctors(); // Refresh the list of doctors

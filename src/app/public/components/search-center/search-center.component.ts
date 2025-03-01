@@ -54,7 +54,6 @@ export class SearchCenterComponent implements OnInit {
   }
 
   chooseCentre(centre: Center): void {
-    console.log("Centre émis : ", centre);
     this.centreSelected.emit(centre);
   }
 }

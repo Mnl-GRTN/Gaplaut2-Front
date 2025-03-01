@@ -56,7 +56,6 @@ export class EditCentreFormComponent implements OnInit {
 
   // Handle form submission
   onSubmit(): void {
-    console.log("Je submit")
     if (this.editForm.valid) {
       const updatedCentre: Center = {
         ...this.centre,

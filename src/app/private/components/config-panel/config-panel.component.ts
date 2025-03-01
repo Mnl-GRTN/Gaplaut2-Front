@@ -78,7 +78,6 @@ export class ConfigPanelComponent {
   }
   
   onRemove(user: Doctor): void {
-    console.log('Remove user:', user);
     const authHeader = this.authService.getAuthHeaders().get('Authorization');
     if (authHeader) {
     this.doctorService.removeDoctorById(user.id, authHeader).subscribe(
@@ -100,7 +99,6 @@ export class ConfigPanelComponent {
   }
 
   onSaveUser(user: Doctor): void {
-    console.log('User saved:', user);
     // Handle saving the user (send to API)
     this.selectedUser = null; // Reset after saving
     this.fetchDoctors(); // Refresh the list of doctors

@@ -15,7 +15,6 @@ export class TestComponent {
   onLogout(): void {
     this.authService.logout(); // Call the logout method from AuthService
     // Optionally, you can redirect to a different page after logout
-    console.log('Logged out successfully');
   }
 
 }
