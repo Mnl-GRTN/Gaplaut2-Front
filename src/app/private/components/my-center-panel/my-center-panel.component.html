@@ -1,0 +1,55 @@
+<div class="my-centre-panel">
+    <!-- Toolbar -->
+    <mat-toolbar color="primary">
+      <span>Mon Centre</span>
+    </mat-toolbar>
+  <div class="my-centre-container"  *ngIf="!selectedUser">
+    <mat-card *ngIf="centre">
+      <mat-card-content>
+        <!-- Centre Information -->
+        <div *ngIf="centre">
+            <h5>Informations du Centre</h5>
+            <p><strong>Nom:</strong> {{ centre.centreName }}</p>
+            <p><strong>Ville:</strong> {{ centre.city }}</p>
+            <p><strong>Adresse:</strong> {{ centre.address }}</p>
+            <p><strong>Code Postal:</strong> {{ centre.postalCode }}</p>
+        </div>
+  
+        <!-- Doctors Table -->
+        <app-user-table
+          [users]="doctors"
+          [title]="'Docteurs'"
+          [addButtonLabel]="''"
+          (addUser)="onAddDoctor()"
+          (editUser)="onEdit($event)"
+          (removeUser)="onRemove($event)">
+        </app-user-table>
+  
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+  
+        <!-- No Doctors Message -->
+        <div *ngIf="doctors.length === 0 && !errorMessage">
+          <p>Aucun docteur trouvé pour ce centre.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+    <!-- Loading or Error State -->
+    <div *ngIf="!centre && !errorMessage">
+      <p>Chargement des informations du centre...</p>
+    </div>
+  </div>
+
+<app-edit-user
+  *ngIf="selectedUser"
+  [user]="selectedUser"
+  [newUser]="newUser"
+  [centerLocked]="centerLocked"
+  [roleLocked]="roleLocked"
+  (save)="onSaveUser($event)"
+  (cancel)="onCancelEdit()">
+</app-edit-user>

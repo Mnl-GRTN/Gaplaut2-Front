@@ -15,7 +15,7 @@ import {MatTableModule} from '@angular/material/table';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { UserTableComponent } from '../user-table/user-table.component';
@@ -26,7 +26,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 @Component({
   selector: 'app-manage-medecins',
   standalone: true,
-  imports: [MatListModule, NgIf, MatCardModule, MatIconModule, NgFor, MatInputModule, MatButtonModule, MatToolbarModule, MatTableModule, EditUserComponent, UserTableComponent, ConfirmationDialogComponent],
+  imports: [MatListModule, NgIf, MatCardModule, MatIconModule, MatInputModule, MatButtonModule, MatToolbarModule, MatTableModule, EditUserComponent, UserTableComponent, ConfirmationDialogComponent],
   templateUrl: './manage-medecins.component.html',
   styleUrl: './manage-medecins.component.scss'
 })

@@ -1,0 +1,23 @@
+.my-centre-panel {
+    padding: 20px;
+  }
+
+.my-centre-container {
+margin-top: 20px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-list {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+mat-list-item {
+  margin-bottom: 10px;
+}
