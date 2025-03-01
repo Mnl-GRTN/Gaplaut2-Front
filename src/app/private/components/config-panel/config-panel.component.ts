@@ -20,25 +20,22 @@ import { NgIf, NgFor } from '@angular/common';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 
 @Component({
-  selector: 'app-manage-medecins',
+  selector: 'app-config-panel',
   standalone: true,
   imports: [MatListModule, NgIf, MatCardModule, MatIconModule, NgFor, MatInputModule, MatButtonModule, MatToolbarModule, MatTableModule, EditUserComponent],
-  templateUrl: './manage-medecins.component.html',
-  styleUrl: './manage-medecins.component.scss'
+  templateUrl: './config-panel.component.html',
+  styleUrl: './config-panel.component.scss'
 })
-
-export class ManageMedecinsComponent implements OnInit {
-  @Input() centreId!: number; // Input property to receive the centre ID
+export class ConfigPanelComponent {
   @Output() save = new EventEmitter<void>(); 
   @Output() cancel = new EventEmitter<void>();
-  doctors: Doctor[] = [];
-  admins: Doctor[] = [];
+  superadmins: Doctor[] = [];
+  displayedColumns: string[] = ['id', 'name', 'email', 'actions']; 
   errorMessage: string | null = null;
+
   selectedUser: Doctor | null = null
 
   newUser: boolean = false;
-
-  displayedColumns: string[] = ['id', 'name', 'email', 'actions']; 
 
   constructor(
     private doctorService: DoctorService,
@@ -54,29 +51,32 @@ export class ManageMedecinsComponent implements OnInit {
     const authHeader = this.authService.getAuthHeaders().get('Authorization'); // Get the auth header
 
     if (authHeader) {
-      this.doctorService.getDoctorsByCentre(this.centreId, authHeader).subscribe(
+      this.doctorService.getDoctors(authHeader).subscribe(
         (data) => {
-          console.log(data);
-          this.doctors = data.filter(user => user.roles.some(role => role.roleName === 'doctor')); // Filter doctors
-          this.admins = data.filter(user => user.roles.some(role => role.roleName === 'admin')); // Filter admins
+          this.superadmins = data.filter(user => user.roles.some(role => role.roleName === 'superadmin')); // Filter superadmins
         },
         (error) => {
-          this.errorMessage = 'Failed to fetch users. Please try again.'; // Display error message
+          this.errorMessage = 'Erreur lors de la récupération des superadmins';
         }
       );
-    } else {
-      this.errorMessage = 'Authorization header is missing.'; // Display error message
     }
   }
 
-  onSave(): void {
-    this.save.emit(); // Émet l'événement pour sauvegarder
+  onAddSuperAdmin(): void {
+    const newUser: Doctor = {
+      id: 0, // ID will be assigned by the backend
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      roles: [{ id: 1, roleName: 'superadmin' }], // Assign the superadmin role
+      centre: { id: 1, centreName: '', city: '', address: '', postalCode: '' }, // Assign a dummy centre with ID 1 (default)
+      passwordChanged: true // For new users, always hash the password
+    };
+    this.selectedUser = newUser; // Set the new user for editing
+    this.newUser = true; // Set the flag for new user
   }
-
-  onCancel(): void {
-    this.cancel.emit(); // Émet l'événement pour annuler
-  }
-
+  
   onRemove(user: Doctor): void {
     console.log('Remove user:', user);
     const authHeader = this.authService.getAuthHeaders().get('Authorization');
@@ -108,20 +108,5 @@ export class ManageMedecinsComponent implements OnInit {
 
   onCancelEdit(): void {
     this.selectedUser = null; // Reset if cancelled
-  }
-
-  onAddUser(role: 'admin' | 'doctor'): void {
-    const newUser: Doctor = {
-      id: 0, // ID will be assigned by the backend
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      roles: [{ id: role === 'admin' ? 2 : 3, roleName: role }], // Assign role ID based on role
-      centre: { id: this.centreId, centreName: '', city: '', address: '', postalCode: '' }, // Assign the current centre
-      passwordChanged: true // For new users, always hash the password
-    };
-    this.selectedUser = newUser; // Set the new user for editing
-    this.newUser = true; // Set the flag for new user
   }
 }

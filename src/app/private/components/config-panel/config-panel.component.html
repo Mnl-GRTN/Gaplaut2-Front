@@ -1,0 +1,76 @@
+<div class="config-panel">
+    <!-- Toolbar -->
+    <mat-toolbar color="primary">
+      <span>Config Superadmin </span>
+    </mat-toolbar>
+
+    <div class="manage-superadmins-container" *ngIf="!selectedUser">
+        <mat-card>
+    
+            <mat-card-content>
+                <!-- Message d'erreur -->
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+    
+                <div *ngIf="superadmins.length > 0">
+                    <h4>Utilisateurs du centre</h4>
+                    <!-- Tableau des Admins -->
+                    <mat-card-actions>
+                        <h5>Superadmins</h5>
+                        <button mat-icon-button class="green-button" (click)="onAddSuperAdmin()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                    <p *ngIf="superadmins.length === 0">Pas d'superadmins pour ce centre.</p>
+                    <table mat-table [dataSource]="superadmins" *ngIf="superadmins.length > 0">
+                        <!-- Colonne ID -->
+                        <ng-container matColumnDef="id">
+                          <th mat-header-cell *matHeaderCellDef>ID</th>
+                          <td mat-cell *matCellDef="let superadmin">{{ superadmin.id }}</td>
+                        </ng-container>
+                      
+                        <!-- Colonne Nom (First + Last Name) -->
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell *matHeaderCellDef>Nom</th>
+                          <td mat-cell *matCellDef="let superadmin">{{ superadmin.firstName }} {{ superadmin.lastName }}</td>
+                        </ng-container>
+    
+                        <!-- Colonne Email -->
+                        <ng-container matColumnDef="email">
+                          <th mat-header-cell *matHeaderCellDef>Email</th>
+                          <td mat-cell *matCellDef="let superadmin">{{ superadmin.email }}</td>
+                        </ng-container>
+                      
+                        <!-- Colonne Actions -->
+                        <ng-container matColumnDef="actions">
+                          <th mat-header-cell *matHeaderCellDef>Actions</th>
+                          <td mat-cell *matCellDef="let superadmin">
+                            <button mat-icon-button (click)="onEdit(superadmin)">
+                              <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="onRemove(superadmin)">
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                          </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                </div>
+
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<app-edit-user
+        *ngIf="selectedUser"
+        [user]="selectedUser"
+        [newUser]="newUser"
+        (save)="onSaveUser($event)"
+        (cancel)="onCancelEdit()">
+</app-edit-user>
+
+
+                    

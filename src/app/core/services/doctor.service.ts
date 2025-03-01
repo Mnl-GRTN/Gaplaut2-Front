@@ -24,6 +24,14 @@ export class DoctorService {
     return this.http.get<Doctor[]>(url, { headers });
   }
 
+  getDoctors(authHeader: string): Observable<Doctor[]> {
+    const headers = new HttpHeaders({
+      'Authorization': authHeader // Add Basic Auth header
+    });
+
+    return this.http.get<Doctor[]>('private/api/doctors', { headers });
+  }
+
   removeDoctorById(doctorId: number, authHeader: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': authHeader // Add Basic Auth header
