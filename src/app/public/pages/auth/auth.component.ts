@@ -10,10 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
+
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [FormsModule, NgIf, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [FormsModule, NgIf, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, NavbarComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })

@@ -4,10 +4,12 @@ import { InfoCardComponent } from "../../components/info-card/info-card.componen
 import { AppointmentFormComponent } from '../../components/appointment-form/appointment-form.component';
 import { Center } from '../../../core/services/center';
 
+import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SearchCenterComponent, InfoCardComponent, AppointmentFormComponent],
+  imports: [SearchCenterComponent, InfoCardComponent, AppointmentFormComponent, NavbarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
