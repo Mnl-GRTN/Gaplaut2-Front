@@ -83,10 +83,8 @@ export class PlanningPanelComponent implements OnInit {
   fetchVaccinationsForDate(date: string): void {
     const authHeader = this.authService.getAuthHeaders().get('Authorization');
     if (this.centre && authHeader) {
-      console.log('Fetching vaccinations for date:', date, 'and centre:', this.centre.id);
       this.vaccinationService.getVaccinationAppointments(this.centre.id, date, authHeader).subscribe(
         (vaccinations) => {
-          console.log ('Vaccinations:', vaccinations);
           this.vaccinations = vaccinations;
         },
         (error) => {
@@ -107,7 +105,6 @@ export class PlanningPanelComponent implements OnInit {
     const authHeader = this.authService.getAuthHeaders().get('Authorization');
     if (vaccination.id && authHeader) {
       // User confirmed validation
-      console.log('Validating vaccination:', vaccination.id);
       this.vaccinationService.updateVaccinationAppointment(vaccination.id, authHeader).subscribe(
         () => {
           this.fetchVaccinationsForDate(this.selectedDate); // Refresh the list of vaccinations
