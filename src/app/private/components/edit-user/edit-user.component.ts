@@ -40,6 +40,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EditUserComponent implements OnInit {
   @Input() user!: Doctor | undefined; // Input property to receive the user data
   @Input() newUser: boolean = false; // Input property to determine if the user is new
+  @Input() centerLocked: boolean = false;
+  @Input() roleLocked: boolean = false;
   @Output() save = new EventEmitter<Doctor>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -80,9 +82,12 @@ export class EditUserComponent implements OnInit {
         this.isCentreDisabled = true; // Disable the centre field
       }
     }
-
-    this.fetchRoles();
-    this.fetchCentres();
+    if(!this.roleLocked){
+      this.fetchRoles();
+    }
+    if (!this.centerLocked){
+      this.fetchCentres();
+    }
   }
 
   fetchRoles(): void {

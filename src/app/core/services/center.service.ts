@@ -19,6 +19,11 @@ export class CenterService {
     return this.http.get<Center[]>(this.publicApiUrl);
   }
 
+  getOneVaccinationCenter(id: number): Observable<Center> {
+    const url = `public/api/centre/${id}`;
+    return this.http.get<Center>(url);
+  }
+
   // PUT request to update a vaccination center
   updateCentre(id: number, centre: Center, authHeader: string): Observable<any> {
     const headers = new HttpHeaders({

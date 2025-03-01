@@ -1,12 +1,12 @@
 <div class="centres-panel">
     <!-- Toolbar -->
     <mat-toolbar color="primary">
-      <span>Vaccination Centres </span>
+      <span>Gestion des centres de vaccinations </span>
     </mat-toolbar>
   
     <!-- Search Bar -->
     <div *ngIf="!selectedCentre && !selectedManageCentreId" class="search-bar">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search by name, city, or postal code</mat-label>
         <input
           matInput
