@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-auth',
@@ -16,13 +17,36 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
   hidePassword: boolean = true; // État pour gérer la visibilité du mot de passe
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    // Check if the user is already authenticated
+    if (this.authService.isAuthenticated()) {
+      this.authService.fetchUserInfo().subscribe({
+        next: () => {
+          // Redirect to the dashboard and show a snack bar message
+          this.router.navigate(['/dashboard']);
+          this.snackBar.open("Vous êtes déjà connecté.", "Fermer", {
+            duration: 3000, // Display for 3 seconds
+          });
+        },
+        error: () => {
+          // If the token is invalid, clear the session and stay on the login page
+          this.authService.logout();
+        }
+      });
+    }
+  }
 
   onSubmit(loginForm: NgForm): void {
     if (loginForm.valid) {
