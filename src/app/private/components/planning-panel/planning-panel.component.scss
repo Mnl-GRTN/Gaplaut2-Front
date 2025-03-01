@@ -1,0 +1,39 @@
+.planning-panel {
+    padding: 20px;
+  }
+  
+  .planning-container {
+    margin-top: 20px;
+  }
+  
+  mat-card-content {
+    padding: 20px;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 20px;
+  }
+  
+  .date-picker-container {
+    display: flex;
+    align-items: center; // Vertically align items
+    gap: 10px; // Add spacing between elements
+    margin: 20px 0;
+    max-width: 300px; // Limit the width of the datepicker
+  
+    mat-form-field {
+      flex: 1; // Allow the datepicker to take up remaining space
+    }
+  
+    button {
+      display: flex;
+      align-items: center; // Center the icon vertically
+      justify-content: center; // Center the icon horizontally
+    }
+  }

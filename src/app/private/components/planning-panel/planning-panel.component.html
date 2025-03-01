@@ -1,0 +1,110 @@
+<div class="planning-panel">
+    <!-- Toolbar -->
+    <mat-toolbar color="primary">
+      <span>Planning du Centre</span>
+    </mat-toolbar>
+  
+    <div class="planning-container" *ngIf="centre">
+      <mat-card>
+        <mat-card-content>
+          <!-- Centre Information -->
+          <div>
+            <h5>Informations du Centre</h5>
+            <p><strong>Nom:</strong> {{ centre.centreName }}</p>
+            <p><strong>Ville:</strong> {{ centre.city }}</p>
+            <p><strong>Adresse:</strong> {{ centre.address }}</p>
+            <p><strong>Code Postal:</strong> {{ centre.postalCode }}</p>
+          </div>
+  
+        <!-- Date Picker with Navigation Arrows -->
+        <div class="date-picker-container">
+            <button mat-icon-button (click)="onPreviousDay()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+  
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="datePicker"
+                [(ngModel)]="selectedDate"
+                (dateChange)="onDateChange($event.value)"
+              />
+              <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+              <mat-datepicker #datePicker></mat-datepicker>
+            </mat-form-field>
+  
+            <button mat-icon-button (click)="onNextDay()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+  
+          <!-- Vaccinations Table -->
+          <div>
+            <h5>Vaccinations pour le {{ selectedDate }}</h5>
+            <table mat-table [dataSource]="vaccinations" *ngIf="vaccinations.length > 0">
+              <!-- Column: Name -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Prénom Nom</th>
+                <td mat-cell *matCellDef="let vaccination">
+                  {{ vaccination.firstName }} {{ vaccination.lastName }}
+                </td>
+              </ng-container>
+  
+              <!-- Column: Email -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let vaccination">{{ vaccination.mail }}</td>
+              </ng-container>
+  
+              <!-- Column: Phone -->
+              <ng-container matColumnDef="phone">
+                <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+                <td mat-cell *matCellDef="let vaccination">{{ vaccination.phoneNumber }}</td>
+              </ng-container>
+  
+              <!-- Column: Status -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Statut</th>
+                <td mat-cell *matCellDef="let vaccination">
+                  <mat-checkbox
+                    *ngIf="vaccination.isVaccined"
+                    [checked]="true"
+                    disabled
+                  >
+                    Validée
+                  </mat-checkbox>
+                  <button
+                    *ngIf="!vaccination.isVaccined"
+                    mat-button
+                    color="primary"
+                    (click)="onValidateVaccination(vaccination)"
+                  >
+                    Valider
+                  </button>
+                </td>
+              </ng-container>
+  
+              <!-- Row Definitions -->
+              <tr mat-header-row *matHeaderRowDef="['name', 'email', 'phone', 'status']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['name', 'email', 'phone', 'status']"></tr>
+            </table>
+  
+            <!-- No Vaccinations Message -->
+            <div *ngIf="vaccinations.length === 0">
+              <p>Aucune vaccination trouvée pour cette date.</p>
+            </div>
+          </div>
+  
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <!-- Loading or Error State -->
+    <div *ngIf="!centre && !errorMessage">
+      <p>Chargement des informations du centre...</p>
+    </div>
+  </div>

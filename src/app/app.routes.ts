@@ -8,7 +8,7 @@ import { CentresPanelComponent } from './private/components/centres-panel/centre
 import { ConfigPanelComponent } from './private/components/config-panel/config-panel.component';
 import { WelcomeBoardComponent } from './private/components/welcome-board/welcome-board.component';
 import { MyCenterPanelComponent } from './private/components/my-center-panel/my-center-panel.component';
-// import { PlanningPanelComponent } from './private/pages/planning-panel/planning-panel.component';
+import { PlanningPanelComponent } from './private/components/planning-panel/planning-panel.component';
 
 export const routes: Routes = [
 
@@ -22,7 +22,7 @@ export const routes: Routes = [
           { path: 'centres', component: CentresPanelComponent, canActivate: [AuthGuard], data: { roles: ['ROLE_superadmin'] } },
           { path: 'config', component: ConfigPanelComponent, canActivate: [AuthGuard], data: { roles: ['ROLE_superadmin'] } },
           { path: 'my-centre', component: MyCenterPanelComponent, canActivate:[AuthGuard], data: { roles: ['ROLE_admin'] } },
-        //   { path: 'planning', component: PlanningPanelComponent, data: { roles: ['ROLE_admin', 'ROLE_medecin'] } },
+          { path: 'planning', component: PlanningPanelComponent, data: { roles: ['ROLE_admin', 'ROLE_medecin'] } },
           { path: '', component: WelcomeBoardComponent, pathMatch: 'full' } // Default route for dashboard
         ]
       },

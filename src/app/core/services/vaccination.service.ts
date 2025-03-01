@@ -19,15 +19,15 @@ export class VaccinationService {
     }
 
     // GET request to fetch all vaccination appointments
-    getVaccinationAppointments(centerId: number, date: string): Observable<Vaccination[]> {
+    getVaccinationAppointments(centerId: number, date: string, authHeader: string): Observable<Vaccination[]> {
         const url = `private/api/vaccinations/${centerId}/${date}`;
-        return this.http.get<Vaccination[]>(url);
+        return this.http.get<Vaccination[]>(url, { headers: { 'Authorization': authHeader } });
     }
 
     // PUT request to update (validate) a vaccination appointment
-    updateVaccinationAppointment(vaccinationId: number): Observable<any> {
+    updateVaccinationAppointment(vaccinationId: number, authHeader: string): Observable<any> {
         const url = `private/api/vaccination/validation/${vaccinationId}`;
-        return this.http.put(url, {});
+        return this.http.put(url, null, { headers: { 'Authorization': authHeader } });
     }
 
 }

@@ -43,7 +43,6 @@ export class DoctorService {
 
   updateDoctorById(doctorId: number, doctor: Doctor, authHeader: string): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': authHeader // Add Basic Auth header
     });
 

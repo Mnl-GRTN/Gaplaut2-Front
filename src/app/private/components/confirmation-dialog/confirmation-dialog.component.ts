@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogContent, MatDialogActions, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { Component, inject, Inject, Input } from '@angular/core';
+import { MatDialogContent, MatDialogActions, MatDialogRef, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -11,5 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ConfirmationDialogComponent {
 
-  constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>) { }
+  message = inject(MAT_DIALOG_DATA).message;
+
+  constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {name: string}) { }
 }
