@@ -26,7 +26,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 @Component({
   selector: 'app-manage-medecins',
   standalone: true,
-  imports: [MatListModule, NgIf, MatCardModule, MatIconModule, MatInputModule, MatButtonModule, MatToolbarModule, MatTableModule, EditUserComponent, UserTableComponent, ConfirmationDialogComponent],
+  imports: [MatListModule, NgIf, MatCardModule, MatIconModule, MatInputModule, MatButtonModule, MatToolbarModule, MatTableModule, EditUserComponent, UserTableComponent],
   templateUrl: './manage-medecins.component.html',
   styleUrl: './manage-medecins.component.scss'
 })

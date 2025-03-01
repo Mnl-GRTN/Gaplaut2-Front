@@ -117,7 +117,7 @@ export class AppointmentFormComponent {
   submitAppointment(): void {
     if (this.selectedCentre) {
       this.vaccination.centre.id = this.selectedCentre.id;
-      this.vaccinationService.postVaccination(this.vaccination).subscribe({
+      this.vaccinationService.postVaccinationAppointment(this.vaccination).subscribe({
         next: () => {
           this.errorMessage = '';
           this.isSubmitted = true;
