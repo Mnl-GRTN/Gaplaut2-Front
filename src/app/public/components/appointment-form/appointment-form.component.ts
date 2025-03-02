@@ -41,7 +41,7 @@ export class AppointmentFormComponent {
   constructor(private vaccinationService: VaccinationService, private datePipe: DatePipe) {
     this.minDate.setHours(0, 0, 0, 0); // Normaliser l'heure
     this.formattedDate = this.datePipe.transform(this.minDate, 'dd/MM/yyyy') || ''; 
-    this.vaccination.date = this.minDate.toISOString().split('T')[0]; // Stocke en YYYY-MM-DD dès le départ
+    this.vaccination.date = this.datePipe.transform(this.minDate, 'yyyy-MM-dd') || '';
   }
   
   
@@ -58,7 +58,7 @@ export class AppointmentFormComponent {
 
   onDateSelection(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      this.minDate.setHours(0, 0, 0, 0); // Normaliser l'heure
+      this.minDate.setHours(0, 0, 0, 0); // Normalize time
   
       if (event.value < this.minDate) {
         this.dateInvalid = true;
@@ -67,11 +67,11 @@ export class AppointmentFormComponent {
         return;
       }
   
-      // Formater correctement en JJ/MM/YYYY
-      this.formattedDate = this.datePipe.transform(event.value, 'dd/MM/yyyy') || '';
-      this.vaccination.date = event.value.toISOString().split('T')[0]; // Stocke en ISO sans heure
+      // Convert date to 'YYYY-MM-DD' format without altering time zone
+      const localDate = new Date(event.value.getTime() - event.value.getTimezoneOffset() * 60000);
+      this.vaccination.date = this.datePipe.transform(event.value, 'yyyy-MM-dd') || '';
+  
       this.dateInvalid = false;
-      
     }
   }
   
@@ -97,7 +97,7 @@ export class AppointmentFormComponent {
       date.getDate() === day &&
       date >= today
     ) {
-      this.vaccination.date = date.toISOString().split('T')[0]; // Assure un format sans heure
+      this.vaccination.date = this.datePipe.transform(date, 'yyyy-MM-dd') || '';
       this.dateInvalid = false;
       
     } else {
