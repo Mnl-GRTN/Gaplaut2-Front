@@ -1,27 +1,74 @@
-# VaccinationApp
+# Gaplaut2 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+Gaplaut2 is a web application for managing a fleet of medical centers. 
+Here you can find its frontend developed with the Angular framework.
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Requirements
 
-## Code scaffolding
+- Git
+- Node.js
+- npm
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+### Run the application
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clone the repository
+```bash
+git clone https://github.com/Mnl-GRTN/Gaplaut2-Front.git
+cd Gaplaut2-Front
+```
 
-## Running unit tests
+2. Install the dependencies
+```bash
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+3. Run the application
+```bash
+ng serve
+```
 
-## Running end-to-end tests
+4. The application should be running on `http://localhost:4200/`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+## Use of the application
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Public application for booking vaccination appointments
+- As a patient, you can book an appointment in a medical center.
+
+### Back office application for managing the fleet of medical centers
+- As an superadmin, you can manage the medical centers and the people working in them.
+- As an admin, you can manage the appointments of the medical center you are in charge of and the doctors working in it.
+- As a doctor, you can manage your appointments.
+
+## Test the application
+- You can use the following credentials to test the application:
+  - superadmin: 
+    - email:superadmin
+    - password:superadmin
+  - admin:
+    - centre:2
+       - email:admin
+       - password:admin
+    - centre:3
+       - email:admin2
+       - password:admin2
+  - doctor:
+    - centre:2
+       - email:doctor
+       - password:doctor
+    - centre:3
+       - email:doctor2
+       - password:doctor2
+
+
+
+## Instructions of the assignment
+
+### Public application for booking appointments
+<img src="README_img/publicApp.jpg"></img>
+
+### Back office application for managing the fleet of medical centers
+<img src="README_img/backOfficeApp.jpg"></img>
