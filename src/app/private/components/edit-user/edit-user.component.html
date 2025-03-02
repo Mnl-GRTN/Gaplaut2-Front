@@ -38,7 +38,7 @@
   
         <mat-form-field>
           <mat-label>Centre</mat-label>
-          <mat-select [(ngModel)]="user.centre.id" name="centre" [disabled]="isCentreDisabled" [disabled]="centerLocked" required #centreSelect="ngModel">
+          <mat-select [(ngModel)]="user.centre.id" name="centre" [disabled]="isCentreDisabled || centerLocked" required #centreSelect="ngModel">
             <mat-option *ngFor="let centre of centres" [value]="centre.id">
               {{ centre.centreName }} - {{ centre.city }}
             </mat-option>
